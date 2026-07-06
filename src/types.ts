@@ -33,12 +33,36 @@ export interface IsbarNote {
   recommendation: string
 }
 
+/** Photo attached to a note — e.g. a snap of the paper chart, so the
+ * physical page stays on the ward and a copy lives with the record. */
+export interface NoteAttachment {
+  id: string
+  dataUrl: string // demo-only: image kept in memory as a data URL
+  caption?: string
+}
+
+/** A reader asking the note's author to clarify something, with an optional
+ * reply. Keeps "can't read the reg's handwriting" inside the record. */
+export interface Clarification {
+  id: string
+  authorId: string
+  createdAt: string
+  text: string
+  reply?: { authorId: string; createdAt: string; text: string }
+}
+
 export interface Note {
   id: string
   patientId: string
   authorId: string
   createdAt: string // ISO datetime
-  isbar: IsbarNote
+  /** Seed notes predate `kind` — absent means 'isbar'. */
+  kind?: 'isbar' | 'progress'
+  isbar?: IsbarNote
+  /** Free-text progress note body (kind === 'progress'). */
+  body?: string
+  attachments?: NoteAttachment[]
+  clarifications?: Clarification[]
 }
 
 export interface Message {

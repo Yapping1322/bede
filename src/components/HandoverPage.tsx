@@ -60,18 +60,33 @@ export default function HandoverPage() {
 
               {latest ? (
                 <dl className="mt-2 space-y-1.5">
-                  <div>
-                    <dt className="inline text-xs font-bold text-slate-600 uppercase">
-                      Assessment:{' '}
-                    </dt>
-                    <dd className="inline text-sm text-slate-800">{latest.isbar.assessment}</dd>
-                  </div>
-                  <div>
-                    <dt className="inline text-xs font-bold text-slate-600 uppercase">Plan: </dt>
-                    <dd className="inline text-sm text-slate-800">
-                      {latest.isbar.recommendation}
-                    </dd>
-                  </div>
+                  {latest.kind === 'progress' ? (
+                    <div>
+                      <dt className="inline text-xs font-bold text-slate-600 uppercase">
+                        Latest note:{' '}
+                      </dt>
+                      <dd className="inline text-sm text-slate-800">{latest.body}</dd>
+                    </div>
+                  ) : (
+                    <>
+                      <div>
+                        <dt className="inline text-xs font-bold text-slate-600 uppercase">
+                          Assessment:{' '}
+                        </dt>
+                        <dd className="inline text-sm text-slate-800">
+                          {latest.isbar?.assessment}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt className="inline text-xs font-bold text-slate-600 uppercase">
+                          Plan:{' '}
+                        </dt>
+                        <dd className="inline text-sm text-slate-800">
+                          {latest.isbar?.recommendation}
+                        </dd>
+                      </div>
+                    </>
+                  )}
                   <p className="text-xs text-slate-400">
                     Last note {formatDateTime(latest.createdAt)} — {author?.name}
                     {author ? ` (${roleLabels[author.role]})` : ''}

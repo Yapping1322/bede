@@ -52,6 +52,35 @@ class MockNotesStore extends Emitter implements NotesStore {
     })
     this.emit()
   }
+
+  requestClarification(noteId: string, authorId: string, text: string): void {
+    const note = this.notes.find((n) => n.id === noteId)
+    if (!note) return
+    note.clarifications = [
+      ...(note.clarifications ?? []),
+      {
+        id: `c-${noteId}-${(note.clarifications?.length ?? 0) + 1}`,
+        authorId,
+        createdAt: new Date().toISOString(),
+        text,
+      },
+    ]
+    this.emit()
+  }
+
+  replyClarification(
+    noteId: string,
+    clarificationId: string,
+    authorId: string,
+    text: string,
+  ): void {
+    const clar = this.notes
+      .find((n) => n.id === noteId)
+      ?.clarifications?.find((c) => c.id === clarificationId)
+    if (!clar || clar.reply) return
+    clar.reply = { authorId, createdAt: new Date().toISOString(), text }
+    this.emit()
+  }
 }
 
 class MockMessageStore extends Emitter implements MessageStore {

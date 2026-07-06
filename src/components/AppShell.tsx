@@ -20,7 +20,7 @@ export default function AppShell() {
         <div className="h-12 px-4 flex items-center justify-between gap-4">
           <div className="flex items-center gap-6 min-w-0">
             <span className="flex items-center gap-2 min-w-0">
-              <span className="font-bold truncate">Ward Companion</span>
+              <span className="font-bold truncate">Bede</span>
               <span
                 className="shrink-0 rounded bg-warn/20 text-warn text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5"
                 title="Synthetic data only — not for clinical use"

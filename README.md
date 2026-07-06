@@ -1,9 +1,10 @@
-# Ward Companion — prototype
+# Bede — prototype (an Acutis concept)
 
 Patient-centric ward app prototype: per patient, the team shares structured
 ISBAR notes/handover, a message thread, and a pathology + imaging results
-feed. Clickable demo on **synthetic data only** — see `HANDOFF_FABLE.md` for
-the full brief, constraints, and v2 plan.
+feed (lab-reported flags, display-only). Clickable demo on **synthetic data
+only** — see `HANDOFF_FABLE.md` for the brief and `HANDOFF_FABLE_03_FINISH.md`
+for decisions/constraints. Formerly "Ward Companion".
 
 ## Run
 

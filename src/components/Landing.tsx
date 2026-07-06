@@ -3,7 +3,7 @@ export default function Landing({ onEnter }: { onEnter: () => void }) {
     <div className="min-h-dvh bg-slate-900 text-white flex flex-col justify-center px-6 py-12">
       <div className="max-w-md mx-auto w-full">
         <p className="text-sky-400 font-semibold tracking-wide text-sm uppercase">
-          Ward Companion — concept demo
+          Bede — concept demo
         </p>
         <h1 className="mt-3 text-3xl font-bold leading-tight">
           One patient. One screen. The whole team.
@@ -14,7 +14,7 @@ export default function Landing({ onEnter }: { onEnter: () => void }) {
           portals. Handover stitches it together from memory.
         </p>
         <p className="mt-3 text-slate-300 leading-relaxed">
-          Ward Companion scopes everything to the patient: structured
+          Bede scopes everything to the patient: structured
           ISBAR notes and shift handover, a team message thread, and a live
           pathology and imaging feed — one surface, on the phone already in
           your pocket on the round.
@@ -30,7 +30,7 @@ export default function Landing({ onEnter }: { onEnter: () => void }) {
           </li>
           <li className="flex gap-2">
             <span className="text-sky-400">•</span> Results — pathology and
-            imaging in one feed, abnormals flagged
+            imaging in one feed, lab-reported flags displayed
           </li>
         </ul>
         <button
@@ -44,6 +44,15 @@ export default function Landing({ onEnter }: { onEnter: () => void }) {
           results, no connection to any clinical system. Built as a
           conversation starter for hospital IT and privacy governance — not
           for clinical use.
+        </p>
+        <p className="mt-3 text-xs text-slate-500">
+          An Acutis concept ·{' '}
+          <a
+            href="mailto:support@lucanmed.com?subject=Bede%20feedback"
+            className="underline hover:text-slate-300"
+          >
+            Send feedback
+          </a>
         </p>
       </div>
     </div>

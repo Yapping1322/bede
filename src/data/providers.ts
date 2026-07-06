@@ -19,6 +19,8 @@ export interface PatientStore extends Subscribable {
 export interface NotesStore extends Subscribable {
   forPatient(patientId: string): Note[]
   add(note: Omit<Note, 'id' | 'createdAt'>): void
+  requestClarification(noteId: string, authorId: string, text: string): void
+  replyClarification(noteId: string, clarificationId: string, authorId: string, text: string): void
 }
 
 export interface MessageStore extends Subscribable {

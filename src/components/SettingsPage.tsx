@@ -40,6 +40,19 @@ export default function SettingsPage() {
         </section>
 
         <section>
+          <h2 className="text-sm font-bold text-slate-700 px-1 pb-2">Feedback</h2>
+          <a
+            href="mailto:support@lucanmed.com?subject=Bede%20feedback"
+            className="block w-full text-center border border-slate-300 text-slate-700 font-semibold rounded-xl py-3 hover:border-accent-400 hover:text-accent-600"
+          >
+            Send feedback by email
+          </a>
+          <p className="mt-2 px-1 text-xs text-slate-400">
+            Opens your mail app — nothing is collected in the demo itself.
+          </p>
+        </section>
+
+        <section>
           <h2 className="text-sm font-bold text-slate-700 px-1 pb-2">Demo data</h2>
           <button
             onClick={() => {
