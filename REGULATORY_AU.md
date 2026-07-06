@@ -12,14 +12,16 @@
 - The **Therapeutic Goods Administration** regulates software that has a *medical purpose*. Since Feb 2021, "software-based medical devices" are explicitly in scope.
 - **The pivotal question:** does the app **influence a clinical decision**, or is it **communication/administration only**?
   - Pure **secure messaging, note storage, results *display*** may fall under the TGA's **clinical-communication / administrative exclusions** (carve-outs introduced 2021 for software that just enables communication, storage, or display without processing/interpreting for a clinical conclusion).
-  - The moment it **flags/interprets** results (e.g. auto-highlights a critical potassium, triages, alerts), it likely becomes a **Class I or higher SaMD** and needs **ARTG inclusion**.
+  - The moment it **flags/interprets** results (e.g. auto-highlights a critical potassium, triages, alerts), it likely becomes regulated SaMD needing **ARTG inclusion** — and the Feb 2021 reforms **up-classified** software: SaMD that informs a diagnosis/treatment decision is generally **Class IIa minimum**, and alerts where acting/not acting could cause death or serious deterioration plausibly land **Class IIb**. Class I SaMD barely exists post-2021 — the regulatory cliff from "excluded" to "regulated v2" is steep, not a gentle on-ramp.
+  - **"Excluded" vs "exempt" are different instruments.** *Excluded* (Excluded Goods Determination) = not a medical device at all, TGA fully out of scope — pure communication/storage/display sits here. *Exempt* (e.g. certain clinical decision support) = still legally a medical device with no ARTG inclusion needed, but TGA advertising/vigilance rules still apply and the exemption is conditional (informs rather than directs; clinician doesn't rely on it solely; doesn't directly process/analyse signals or images). The classification opinion must establish which side of *that* line each feature sits on.
+  - **AI is a separate tripwire.** TGA guidance (2024–25) treats AI tools — including scribes/summarisers — as medical devices the moment they do more than transcribe. Adding LLM summarisation of notes/handovers later could pull the app into SaMD even while the display/messaging core stays excluded.
 - **Action:** get a written **classification opinion** early. Design the MVP to sit *inside* the exclusion (display + communicate, don't interpret) to defer device regulation — then add clinical-decision features as a deliberately regulated v2.
 
 ### 2. Privacy Act 1988 + Australian Privacy Principles (APPs)
 - Health information is **"sensitive information"** under the Act — the highest protection tier.
 - Key APPs: APP 3 & 6 (collection/use limited to purpose + consent), APP 6 & the health carve-outs, APP 8 (**cross-border disclosure** — matters if any cloud region is offshore), APP 11 (**security** — reasonable steps to protect), APP 5 (collection notices), APP 12/13 (access & correction).
 - **Notifiable Data Breaches (NDB) scheme** — mandatory breach notification to the OAIC and affected individuals.
-- **2024–25 Privacy Act reforms** are tightening this (statutory tort for serious invasions of privacy, higher penalties) — verify current state at build time.
+- **Privacy Act reform is live law, not pending:** the first tranche passed December 2024 and the statutory tort for serious invasions of privacy commenced mid-2025. Higher penalties already apply.
 - **Action:** APP-compliant privacy policy + collection notices, data-flow map, breach-response plan, and a decision on **data residency (keep it onshore)**.
 
 ### 3. My Health Records Act 2012 + Healthcare Identifiers Act 2010
@@ -28,7 +30,7 @@
 - **Action:** for the prototype, **do not touch** My Health Record or real IHIs — it massively raises the compliance bar. Flag as a deliberate v3 integration.
 
 ### 4. State/territory health records law
-- On top of federal law: e.g. **Health Records and Information Privacy Act (NSW)**, **Health Records Act 2001 (Vic)**. WA has no standalone health-privacy Act (federal APPs + WA Dept of Health policy apply), but **public hospital data is governed by WA Health's own information governance** — and private hospitals (SJOG, Hollywood/Ramsay) each have their **own IT & privacy governance** you must pass.
+- On top of federal law: e.g. **Health Records and Information Privacy Act (NSW)**, **Health Records Act 2001 (Vic)**. WA: the **Privacy and Responsible Information Sharing (PRIS) Act passed late 2024** with staged commencement ~2025–26, giving WA public-sector entities (including WA Health) their own privacy regime — the old "WA has no standalone Act" position is expiring exactly as this app would deploy; verify commencement status with the solicitor. Private hospitals (SJOG, Hollywood/Ramsay) each have their **own IT & privacy governance** you must pass.
 - **Action:** any real deployment = that specific site's **information-governance / privacy-impact-assessment (PIA)** sign-off. This is the practical gate, more than any statute.
 
 ---
@@ -65,5 +67,7 @@ These are what hospital procurement and CISOs demand. Achieving them is expensiv
 4. **Regulate deliberately** — only add interpreting/alerting features (and take on SaMD/ARTG + ISO 13485) when the clinical value justifies the regulatory load.
 
 **The honest contrarian read:** "the one and only in Australia" is won less by having every certificate and more by being the **first to pass a real hospital's governance and prove it in a live handover workflow**. Certifications are the *cost of scaling* that beachhead, not the thing that creates it. Sequence accordingly — don't spend a year on ISO 27001 before a single ward has said yes.
+
+**And the space is not greenfield:** Celo, Foxo, Medtasker and others have already passed hospital information governance at multiple AU sites — which is precisely the moat described above. The wedge has to be a workflow they don't own (the patient-scoped notes + handover + messaging + results fusion), named explicitly in the pitch, not "we'll be certified."
 
 **Immediate action for Gubek:** book 30 min with a **health-law solicitor** and a **TGA regulatory consultant** to (a) get the device-classification opinion and (b) confirm the current post-2024-reform Privacy Act position. Those two conversations de-risk the entire build.
