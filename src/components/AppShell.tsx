@@ -19,7 +19,15 @@ export default function AppShell() {
       <header className="no-print bg-slate-900 text-white shrink-0">
         <div className="h-12 px-4 flex items-center justify-between gap-4">
           <div className="flex items-center gap-6 min-w-0">
-            <span className="font-bold truncate">Ward Companion</span>
+            <span className="flex items-center gap-2 min-w-0">
+              <span className="font-bold truncate">Ward Companion</span>
+              <span
+                className="shrink-0 rounded bg-warn/20 text-warn text-[10px] font-bold uppercase tracking-wide px-1.5 py-0.5"
+                title="Synthetic data only — not for clinical use"
+              >
+                Demo
+              </span>
+            </span>
             <nav className="hidden md:flex items-center gap-1">
               {navItems.map((item) => (
                 <NavLink
