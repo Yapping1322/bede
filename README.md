@@ -14,11 +14,13 @@ npm run dev        # http://localhost:5173
 npm run build      # production build to dist/
 ```
 
-## Deploy (private demo link)
+## Deploy
+
+Live demo: **https://bede-demo.vercel.app** (also https://ward-app-ten.vercel.app,
+kept so older links/QRs survive). Vercel project `bede`, team `yapping1322s-projects`.
 
 ```bash
-npx vercel@latest login
-npx vercel@latest --yes    # from this directory
+npx vercel@latest deploy --prod --yes    # from this directory
 ```
 
 ## Structure (shell per HANDOFF_FABLE_02_SHELL.md)
@@ -30,7 +32,9 @@ Routes: `/` ward list (desktop: master–detail split) · `/patient/:id/{notes,m
 - `src/data/providers.ts` — `PatientStore` / `NotesStore` / `MessageStore` / `ResultsProvider` interfaces the UI depends on.
 - `src/data/mockStores.ts` — in-memory implementations over the seed JSON. v2 replaces these with real feeds without touching components.
 - `src/components/ui.tsx` — shared primitives: `Card`, `Badge` (abnormal results and urgent share one `alert` token), `CountBadge`, `Avatar`, `EmptyState`, `ErrorState`, `Skeleton`, `Sheet`, `Timeline`.
-- `src/components/` — `AppShell` (TopBar + BottomNav), `MasterDetailLayout`, `WardList`, `PatientShell` + three tabs, `HandoverPage` (printable), `SettingsPage`, `Landing`, `Login`.
+- `src/components/` — `AppShell` (TopBar + BottomNav), `MasterDetailLayout`, `WardList`, `PatientShell` + three tabs, `HandoverPage` (printable), `SettingsPage`, `Landing`, `Login` (staged demo sign-in: identity → password → 2FA → ward scope; none of it is real security).
+- Notes support ISBAR and free-text progress kinds, photo attachments (in-memory data URLs), and clarification request/reply threads.
+- Companion docs: `ROADMAP_ROLES.md` (per-role gap analysis), `OPERATIONS.md` (integration/staffing/AI-boundary answers), `REGULATORY_AU.md` (compliance map).
 - `src/index.css` — design tokens (`accent`, `alert`, `warn`, `ok`) via Tailwind v4 `@theme`.
 
 ## Demo posture
