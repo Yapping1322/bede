@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, type ReactNode } from 'react'
+import { sessionKeys } from '../lib/utils'
 import type { Staff } from '../types'
 
 interface UserContextValue {
@@ -15,7 +16,11 @@ export function UserProvider({
   initialUser: Staff
   children: ReactNode
 }) {
-  const [user, setUser] = useState(initialUser)
+  const [user, setUserState] = useState(initialUser)
+  const setUser = (u: Staff) => {
+    sessionStorage.setItem(sessionKeys.userId, u.id)
+    setUserState(u)
+  }
   return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>
 }
 

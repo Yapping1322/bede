@@ -1,6 +1,6 @@
 import { staff } from '../data/mockStores'
 import { useUser } from '../context/UserContext'
-import { roleLabels } from '../lib/utils'
+import { roleLabels, sessionKeys } from '../lib/utils'
 import { Avatar, Card } from './ui'
 
 export default function SettingsPage() {
@@ -43,6 +43,8 @@ export default function SettingsPage() {
           <h2 className="text-sm font-bold text-slate-700 px-1 pb-2">Demo data</h2>
           <button
             onClick={() => {
+              sessionStorage.removeItem(sessionKeys.entered)
+              sessionStorage.removeItem(sessionKeys.userId)
               window.location.assign('/')
             }}
             className="w-full border border-alert/40 text-alert font-semibold rounded-xl py-3 hover:bg-alert/5"

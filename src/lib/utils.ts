@@ -16,6 +16,10 @@ export function staffById(id: string): Staff | undefined {
   return staff.find((s) => s.id === id)
 }
 
+// Demo auth survives a refresh but stays tab-scoped (sessionStorage), per the
+// "nothing persists beyond the tab" posture. Reset clears both keys.
+export const sessionKeys = { entered: 'wc-entered', userId: 'wc-user' } as const
+
 export const roleLabels: Record<StaffRole, string> = {
   consultant: 'Consultant',
   registrar: 'Registrar',

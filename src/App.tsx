@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import type { Staff } from './types'
 import { UserProvider } from './context/UserContext'
+import { sessionKeys, staffById } from './lib/utils'
 import AppShell from './components/AppShell'
 import MasterDetailLayout from './components/MasterDetailLayout'
 import PatientShell from './components/PatientShell'
@@ -53,11 +54,31 @@ const router = createBrowserRouter([
 ])
 
 export default function App() {
-  const [entered, setEntered] = useState(false)
-  const [user, setUser] = useState<Staff | null>(null)
+  const [entered, setEntered] = useState(
+    () => sessionStorage.getItem(sessionKeys.entered) === '1',
+  )
+  const [user, setUser] = useState<Staff | null>(
+    () => staffById(sessionStorage.getItem(sessionKeys.userId) ?? '') ?? null,
+  )
 
-  if (!entered) return <Landing onEnter={() => setEntered(true)} />
-  if (!user) return <Login onLogin={setUser} />
+  if (!entered)
+    return (
+      <Landing
+        onEnter={() => {
+          sessionStorage.setItem(sessionKeys.entered, '1')
+          setEntered(true)
+        }}
+      />
+    )
+  if (!user)
+    return (
+      <Login
+        onLogin={(u) => {
+          sessionStorage.setItem(sessionKeys.userId, u.id)
+          setUser(u)
+        }}
+      />
+    )
 
   return (
     <UserProvider initialUser={user}>
