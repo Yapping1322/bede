@@ -1,0 +1,114 @@
+import type { Message, Note, Patient, Result, SeedData } from '../types'
+import type { MessageStore, NotesStore, PatientStore, ResultsProvider } from './providers'
+import seedJson from '../seed/patients.json'
+
+// Demo-only stores: seed JSON + in-memory mutations. Nothing persists across
+// a reload, by design — the prototype holds no data anywhere but this tab.
+
+const seed = seedJson as unknown as SeedData
+
+class Emitter {
+  private listeners = new Set<() => void>()
+  version = 0
+  subscribe = (fn: () => void) => {
+    this.listeners.add(fn)
+    return () => {
+      this.listeners.delete(fn)
+    }
+  }
+  protected emit() {
+    this.version++
+    this.listeners.forEach((fn) => fn())
+  }
+}
+
+const byNewest = (a: { createdAt: string }, b: { createdAt: string }) =>
+  b.createdAt.localeCompare(a.createdAt)
+
+class MockPatientStore extends Emitter implements PatientStore {
+  private patients: Patient[] = [...seed.patients]
+
+  list(): Patient[] {
+    return this.patients
+  }
+
+  get(id: string): Patient | undefined {
+    return this.patients.find((p) => p.id === id)
+  }
+}
+
+class MockNotesStore extends Emitter implements NotesStore {
+  private notes: Note[] = [...seed.notes]
+
+  forPatient(patientId: string): Note[] {
+    return this.notes.filter((n) => n.patientId === patientId).sort(byNewest)
+  }
+
+  add(note: Omit<Note, 'id' | 'createdAt'>): void {
+    this.notes.push({
+      ...note,
+      id: `n-local-${this.notes.length + 1}`,
+      createdAt: new Date().toISOString(),
+    })
+    this.emit()
+  }
+}
+
+class MockMessageStore extends Emitter implements MessageStore {
+  private messages: Message[] = [...seed.messages]
+  private seen = new Map<string, number>()
+
+  constructor() {
+    super()
+    // Start the demo with a couple of unread threads so badges show.
+    seed.patients.forEach((p, i) => {
+      const count = this.messages.filter((m) => m.patientId === p.id).length
+      this.seen.set(p.id, Math.max(0, count - (i % 3)))
+    })
+  }
+
+  forPatient(patientId: string): Message[] {
+    return this.messages
+      .filter((m) => m.patientId === patientId)
+      .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
+  }
+
+  post(msg: Omit<Message, 'id' | 'createdAt'>): void {
+    this.messages.push({
+      ...msg,
+      id: `m-local-${this.messages.length + 1}`,
+      createdAt: new Date().toISOString(),
+    })
+    this.seen.set(msg.patientId, this.forPatient(msg.patientId).length)
+    this.emit()
+  }
+
+  unreadCount(patientId: string): number {
+    const total = this.messages.filter((m) => m.patientId === patientId).length
+    return Math.max(0, total - (this.seen.get(patientId) ?? 0))
+  }
+
+  markSeen(patientId: string): void {
+    const total = this.messages.filter((m) => m.patientId === patientId).length
+    if (this.seen.get(patientId) !== total) {
+      this.seen.set(patientId, total)
+      this.emit()
+    }
+  }
+}
+
+class MockResultsProvider extends Emitter implements ResultsProvider {
+  private results: Result[] = [...seed.results]
+
+  forPatient(patientId: string): Result[] {
+    return this.results
+      .filter((r) => r.patientId === patientId)
+      .sort((a, b) => b.reportedAt.localeCompare(a.reportedAt))
+  }
+}
+
+export const staff = seed.staff
+export const patientStore: PatientStore = new MockPatientStore()
+export const notesStore: NotesStore = new MockNotesStore()
+export const messageStore: MessageStore = new MockMessageStore()
+export const resultsProvider: ResultsProvider = new MockResultsProvider()

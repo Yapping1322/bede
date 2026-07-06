@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+/* Design tokens. Severity reads consistently everywhere: abnormal results
+   and urgent messages share the single `alert` token. */
+@theme {
+  --color-accent-400: #38bdf8;
+  --color-accent-500: #0ea5e9;
+  --color-accent-600: #0284c7;
+  --color-alert: #dc2626;
+  --color-warn: #d97706;
+  --color-ok: #059669;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  html,
+  body,
+  #root {
+    height: auto !important;
+    background: white !important;
+  }
+  .print-expand {
+    overflow: visible !important;
+    height: auto !important;
+  }
+}
