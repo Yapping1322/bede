@@ -55,7 +55,8 @@ The boundary is **the data, not the tool**:
   synthetic seed data. Claude/Copilot can build, refactor and maintain Bede
   forever without a privacy question, because the code never contains
   patient data. That separation is the reason the demo was built this way.
-- **AI on patient data = on-prem only.** The Stella plan: open-weight models
+- **AI on patient data = on-prem only.** The AI-layer plan (name TBD —
+  "Stella" dropped 2026-07-06, trademark conflict): open-weight models
   (Whisper for transcription) running on hospital-controlled hardware, PHI
   never leaves the network. This is the only version hospital governance
   passes today.

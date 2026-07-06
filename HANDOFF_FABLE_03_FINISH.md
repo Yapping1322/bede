@@ -30,8 +30,8 @@ Two Claude sessions edited this repo concurrently on 2026-07-06 (files vanished 
 - Gubek has confirmed Celo is not the same product. Wedge = patient-scoped **notes + structured ISBAR handover + messaging + results in one surface**. Say it that way in all copy.
 
 ### Name — DECIDED 2026-07-06
-- **App = Bede** (St Bede the chronicler → documentation/handover; reads as "bed" → ward beds).
-- **AI layer within the app = Stella** (Stella Maris; the assistant is "Stella" — future transcription/translation features are Stella features under the Bede brand).
+- **App = Bede** (St Bede the chronicler → documentation/handover; reads as "bed" → ward beds). Cleared on the AU register 2026-07-06 (no live marks in 9/42/44); rename executed same night.
+- **AI layer = name TBD.** ~~Stella~~ **DROPPED 2026-07-06 night** by Gubek after the register check found TM 2162491 (Telepathy Labs Inc.) — live protection for the exact word "STELLA" covering AI virtual-assistant software with voice/NLP/TTS in classes 9+42. Do not re-litigate. Replacement candidates being screened; until then docs say "the AI layer".
 - Next session executes the rename: `index.html` title, `Landing.tsx`, `AppShell.tsx` TopBar (keep the DEMO badge), `README.md`, `package.json` name, Vercel project name (`npx vercel@latest project` or dashboard — note the public alias will change from `ward-app-ten.vercel.app`; re-verify and give Gubek the new URL).
 - BEFORE the rename ships: domain availability (bede.app / .health / .com.au) + **IP Australia trademark search for BOTH names** (classes 9/42/44) — route to a Sonnet agent with kimi-webbridge. "Stella" is a crowded AU mark (e.g. Stella insurance); as an in-app assistant name under Bede it's lower-risk, but check.
 
