@@ -1,20 +1,68 @@
+import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { messageStore, patientStore, resultsProvider } from '../data/mockStores'
-import { age, stripAgeSexPrefix, useStore } from '../lib/utils'
+import { messageStore, notesStore, patientStore, resultsProvider } from '../data/mockStores'
+import { age, stripAgeSexPrefix, timeAgo, useStore } from '../lib/utils'
 import { Badge, Card, CountBadge, EmptyState } from './ui'
+import type { Patient } from '../types'
+
+type SortBy = 'bed' | 'recent'
+
+/** Most recent activity on the record: newest note, message or result,
+ * falling back to admission. ISO strings compare lexicographically. */
+function lastActivity(p: Patient): string {
+  const messages = messageStore.forPatient(p.id)
+  const stamps = [
+    p.admittedAt,
+    notesStore.forPatient(p.id)[0]?.createdAt,
+    messages[messages.length - 1]?.createdAt,
+    resultsProvider.forPatient(p.id)[0]?.reportedAt,
+  ].filter((s): s is string => Boolean(s))
+  stamps.sort()
+  return stamps[stamps.length - 1]
+}
 
 export default function WardList() {
   useStore(messageStore)
   useStore(patientStore)
+  useStore(notesStore)
+  useStore(resultsProvider)
   const navigate = useNavigate()
   const { id: activeId } = useParams()
-  const patients = patientStore.list()
+  const [sortBy, setSortBy] = useState<SortBy>('bed')
+
+  const patients = [...patientStore.list()].sort(
+    sortBy === 'bed'
+      ? (a, b) => a.bed.localeCompare(b.bed, undefined, { numeric: true })
+      : (a, b) => lastActivity(b).localeCompare(lastActivity(a)),
+  )
 
   return (
     <div className="px-3 py-3">
       <div className="px-1 pb-2 flex items-baseline justify-between">
         <h1 className="text-sm font-bold text-slate-700">Ward 5 — Medical Oncology</h1>
         <span className="text-xs text-slate-400">{patients.length} patients</span>
+      </div>
+
+      <div className="px-1 pb-2 flex items-center gap-1.5">
+        <span className="text-xs text-slate-400">Sort</span>
+        {(
+          [
+            { key: 'bed', label: 'Bed' },
+            { key: 'recent', label: 'Recent' },
+          ] as const
+        ).map((opt) => (
+          <button
+            key={opt.key}
+            onClick={() => setSortBy(opt.key)}
+            className={`text-xs font-semibold rounded-full px-3 py-1.5 ${
+              sortBy === opt.key
+                ? 'bg-accent-500 text-white'
+                : 'bg-white border border-slate-200 text-slate-500 hover:text-slate-700'
+            }`}
+          >
+            {opt.label}
+          </button>
+        ))}
       </div>
 
       <div className="space-y-2">
@@ -53,6 +101,9 @@ export default function WardList() {
                       title="Abnormal results"
                     />
                   )}
+                  <span className="text-[10px] text-slate-400">
+                    {timeAgo(lastActivity(p))}
+                  </span>
                 </div>
               </div>
             </Card>

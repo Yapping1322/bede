@@ -22,10 +22,13 @@ function isAbnormal(r: Result): boolean {
   return r.kind === 'pathology' ? r.analytes.some((a) => a.flag !== null) : r.abnormal
 }
 
+type Filter = 'all' | 'pathology' | 'imaging'
+
 export default function ResultsTab() {
   const { id: patientId } = useParams()
   useStore(resultsProvider)
   const [openId, setOpenId] = useState<string | null>(null)
+  const [filter, setFilter] = useState<Filter>('all')
 
   if (!patientId) return null
   const results = resultsProvider.forPatient(patientId)
@@ -34,10 +37,52 @@ export default function ResultsTab() {
     return <EmptyState title="No results on file" hint="Pathology and imaging land here as they are reported." />
   }
 
+  const pathologyCount = results.filter((r) => r.kind === 'pathology').length
+  const imagingCount = results.length - pathologyCount
+  const filtered = filter === 'all' ? results : results.filter((r) => r.kind === filter)
+
+  const filters: { key: Filter; label: string }[] = [
+    { key: 'all', label: `All (${results.length})` },
+    { key: 'pathology', label: `Pathology (${pathologyCount})` },
+    { key: 'imaging', label: `Imaging (${imagingCount})` },
+  ]
+
   return (
     <div className="px-3 py-3 pb-8">
+      <div className="pb-3 flex items-center gap-1.5">
+        {filters.map((f) => (
+          <button
+            key={f.key}
+            onClick={() => setFilter(f.key)}
+            className={`text-xs font-semibold rounded-full px-3 py-1.5 ${
+              filter === f.key
+                ? 'bg-accent-500 text-white'
+                : 'bg-white border border-slate-200 text-slate-500 hover:text-slate-700'
+            }`}
+          >
+            {f.label}
+          </button>
+        ))}
+      </div>
+
+      {filtered.length === 0 && (
+        <EmptyState
+          title={
+            filter === 'imaging'
+              ? 'No imaging has been uploaded'
+              : 'No pathology results on file'
+          }
+          hint={
+            filter === 'imaging'
+              ? 'Imaging studies appear here as they are reported.'
+              : 'Lab panels appear here as they are reported.'
+          }
+        />
+      )}
+
+      {filtered.length > 0 && (
       <Timeline>
-        {results.map((r) => {
+        {filtered.map((r) => {
           const open = openId === r.id
           const abnormal = isAbnormal(r)
           return (
@@ -128,6 +173,7 @@ export default function ResultsTab() {
           )
         })}
       </Timeline>
+      )}
     </div>
   )
 }

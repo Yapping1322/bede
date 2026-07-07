@@ -159,3 +159,34 @@ and imaging into it by law — the interoperability tide is with you.
   decisions; it never computes clinical judgements. AI transcription-only
   first; anything that summarises/structures/drafts is a deliberate,
   regulated step.
+
+## 7. External transfer of images + health info (see `legal/`)
+
+Full detail: `legal/EXTERNAL_TRANSFER_LAW.md` (the lawful gateways) and
+`legal/IMAGE_TRANSFER_DESIGN.md` (the channel + mechanics). The primary Acts are
+downloaded under `legal/`. Not legal advice — verify the `[verify]`-tagged items
+with a health-law solicitor before any real PHI.
+
+**Thesis:** the law does not prohibit sending a patient's info/images to another
+treating provider — it conditions it. Make every transfer land inside a named
+lawful gateway (APP 6.2(a), the directly-related-secondary-purpose / treating-team
+referral gateway) and keep every hop onshore.
+
+- **Two image cases.** Radiology (`ImagingResult`) never needs pixels to leave —
+  the PACS deep-link + the MHR text report already cover it. Only clinical photos
+  (`NoteAttachment`) are ever "pixels out", and those scenarios are rare.
+- **Onshore is the whole game.** AU-region deploy (ap-southeast-2) + a DPA meeting
+  the OAIC three-condition "use" test → APP 8 / s 16C never engage. The AI layer
+  sending images to an overseas LLM would re-trigger APP 8 — keep inference
+  onshore or de-identify.
+- **Channel: do not become the transfer operator.** Integrate the hospital's
+  existing secure-messaging rail (HealthLink / Medical-Objects) — already
+  CISO-approved, and it handles recipient auth, encryption, and audit. Kiteworks
+  is bulk IT-to-IT only; MHR carries reports, not pixels.
+- **Stage 1 (now): no outbound photo transfer.** Pixels stay in the hospital.
+  Correct scope for a solo founder pre-pilot; do not build the pixel-out path yet.
+- **Build to stay lawful (v1 of a real deploy):** consent capture as a log event
+  (photography needs its own consent line, not just treatment consent); a
+  purpose/gateway flag + an immutable audit event per outbound item; AU-region
+  residency; a per-image selector that defaults to single-image (minimum
+  necessary).

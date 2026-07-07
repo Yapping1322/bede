@@ -39,7 +39,7 @@ function AttachButton({
       const reader = new FileReader()
       reader.onload = () => {
         onAdd({
-          id: `a-${file.name}-${file.size}-${file.lastModified}`,
+          id: crypto.randomUUID(),
           dataUrl: String(reader.result),
         })
       }

@@ -17,6 +17,15 @@ const WARDS = [
 
 type Step = 'who' | 'password' | 'code' | 'ward'
 
+const STEPS: Step[] = ['who', 'password', 'code', 'ward']
+
+const STEP_TITLES: Record<Step, string> = {
+  who: 'Sign in',
+  password: 'Password',
+  code: 'Second factor',
+  ward: 'Choose your ward',
+}
+
 export default function Login({ onLogin }: { onLogin: (user: Staff) => void }) {
   const [step, setStep] = useState<Step>('who')
   const [selected, setSelected] = useState<Staff | null>(null)
@@ -43,19 +52,31 @@ export default function Login({ onLogin }: { onLogin: (user: Staff) => void }) {
   }
 
   return (
-    <div className="min-h-dvh bg-slate-100 flex flex-col justify-center px-6 py-12">
-      <div className="max-w-md mx-auto w-full">
-        <div className="flex items-baseline justify-between">
-          <h1 className="text-2xl font-bold text-slate-900">Sign in</h1>
-          <Badge tone="warn">Demo</Badge>
+    <div className="min-h-dvh bg-slate-100 flex flex-col px-6 pt-[max(1.25rem,env(safe-area-inset-top))] pb-[max(1.25rem,env(safe-area-inset-bottom))]">
+      <div className="max-w-md mx-auto w-full flex items-center justify-between shrink-0">
+        <span className="text-lg font-bold text-slate-900">Bede</span>
+        <Badge tone="warn">Demo</Badge>
+      </div>
+
+      <div className="max-w-md mx-auto w-full flex-1 flex flex-col justify-center py-8">
+        <div className="flex gap-1.5" aria-hidden>
+          {STEPS.map((s, i) => (
+            <span
+              key={s}
+              className={`h-1 flex-1 rounded-full ${
+                i <= STEPS.indexOf(step) ? 'bg-accent-500' : 'bg-slate-200'
+              }`}
+            />
+          ))}
         </div>
+        <h1 className="mt-4 text-2xl font-bold text-slate-900">{STEP_TITLES[step]}</h1>
 
         {step === 'who' && (
           <>
             <p className="mt-1 text-sm text-slate-500">
               Choose who you are. Real deployments use hospital identity, not a picker.
             </p>
-            <div className="mt-6 space-y-2">
+            <div className="mt-6 space-y-2.5">
               {staff.map((s) => (
                 <Card
                   key={s.id}
@@ -63,13 +84,16 @@ export default function Login({ onLogin }: { onLogin: (user: Staff) => void }) {
                     setSelected(s)
                     setStep('password')
                   }}
-                  className="px-4 py-3"
+                  className="px-4 py-4"
                 >
                   <div className="flex items-center gap-3">
                     <Avatar name={s.name} />
-                    <span>
+                    <span className="min-w-0 flex-1">
                       <span className="block font-medium text-slate-900">{s.name}</span>
                       <span className="block text-sm text-slate-500">{roleLabels[s.role]}</span>
+                    </span>
+                    <span className="text-slate-300 text-lg" aria-hidden>
+                      ›
                     </span>
                   </div>
                 </Card>
@@ -96,13 +120,13 @@ export default function Login({ onLogin }: { onLogin: (user: Staff) => void }) {
                 }}
                 autoFocus
                 placeholder="Any password works in the demo"
-                className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm focus:outline-none focus:border-accent-500"
+                className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-base focus:outline-none focus:border-accent-500"
               />
             </label>
             {error && <p className="mt-2 text-sm text-alert">{error}</p>}
             <button
               onClick={submitPassword}
-              className="mt-4 w-full bg-accent-500 hover:bg-accent-400 text-white font-semibold rounded-xl py-3"
+              className="mt-4 w-full bg-accent-500 hover:bg-accent-400 text-white font-semibold rounded-xl py-3.5 text-base"
             >
               Continue
             </button>
@@ -112,7 +136,7 @@ export default function Login({ onLogin }: { onLogin: (user: Staff) => void }) {
                 setPassword('')
                 setError('')
               }}
-              className="mt-2 w-full text-sm text-slate-400 hover:text-slate-600 py-1"
+              className="mt-2 w-full text-sm text-slate-400 hover:text-slate-600 py-2.5"
             >
               Back
             </button>
@@ -145,13 +169,13 @@ export default function Login({ onLogin }: { onLogin: (user: Staff) => void }) {
                 }}
                 autoFocus
                 placeholder="6 digits"
-                className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-center text-lg tracking-[0.3em] focus:outline-none focus:border-accent-500"
+                className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-center text-lg tracking-[0.3em] focus:outline-none focus:border-accent-500"
               />
             </label>
             {error && <p className="mt-2 text-sm text-alert">{error}</p>}
             <button
               onClick={submitCode}
-              className="mt-4 w-full bg-accent-500 hover:bg-accent-400 text-white font-semibold rounded-xl py-3"
+              className="mt-4 w-full bg-accent-500 hover:bg-accent-400 text-white font-semibold rounded-xl py-3.5 text-base"
             >
               Verify
             </button>
@@ -163,17 +187,17 @@ export default function Login({ onLogin }: { onLogin: (user: Staff) => void }) {
             <p className="mt-1 text-sm text-slate-500">
               Your access is scoped to your ward — you only see your own patients.
             </p>
-            <div className="mt-6 space-y-2">
+            <div className="mt-6 space-y-2.5">
               {WARDS.map((w) =>
                 w.open ? (
-                  <Card key={w.id} onClick={() => onLogin(selected)} className="px-4 py-3.5">
+                  <Card key={w.id} onClick={() => onLogin(selected)} className="px-4 py-4">
                     <div className="flex items-center justify-between">
                       <span className="font-medium text-slate-900">{w.name}</span>
                       <span className="text-sm font-semibold text-accent-600">Enter →</span>
                     </div>
                   </Card>
                 ) : (
-                  <Card key={w.id} className="px-4 py-3.5 opacity-60">
+                  <Card key={w.id} className="px-4 py-4 opacity-60">
                     <div className="flex items-center justify-between">
                       <span className="font-medium text-slate-500">{w.name}</span>
                       <Badge tone="neutral">No access</Badge>
