@@ -3,7 +3,7 @@ export default function Landing({ onEnter }: { onEnter: () => void }) {
     <div className="min-h-dvh bg-slate-900 text-white flex flex-col justify-center px-6 py-12">
       <div className="max-w-md mx-auto w-full">
         <p className="text-sky-400 font-semibold tracking-wide text-sm uppercase">
-          Bede — concept demo
+          Bede · concept demo
         </p>
         <h1 className="mt-3 text-3xl font-bold leading-tight">
           One patient. One screen. The whole team.
@@ -16,20 +16,20 @@ export default function Landing({ onEnter }: { onEnter: () => void }) {
         <p className="mt-3 text-slate-300 leading-relaxed">
           Bede scopes everything to the patient: structured
           ISBAR notes and shift handover, a team message thread, and a live
-          pathology and imaging feed — one surface, on the phone already in
+          pathology and imaging feed, one surface, on the phone already in
           your pocket on the round.
         </p>
         <ul className="mt-6 space-y-2 text-sm text-slate-200">
           <li className="flex gap-2">
-            <span className="text-sky-400">•</span> Notes &amp; handover —
+            <span className="text-sky-400">•</span> Notes &amp; handover:
             ISBAR-structured, timestamped, rolled into a printable ward list
           </li>
           <li className="flex gap-2">
-            <span className="text-sky-400">•</span> Messages — team chat that
+            <span className="text-sky-400">•</span> Messages: team chat that
             never loses which patient it&apos;s about
           </li>
           <li className="flex gap-2">
-            <span className="text-sky-400">•</span> Results — pathology and
+            <span className="text-sky-400">•</span> Results: pathology and
             imaging in one feed, lab-reported flags displayed
           </li>
         </ul>
@@ -42,7 +42,7 @@ export default function Landing({ onEnter }: { onEnter: () => void }) {
         <p className="mt-4 text-xs text-slate-500 leading-relaxed">
           Prototype on entirely synthetic data. No real patients, no real
           results, no connection to any clinical system. Built as a
-          conversation starter for hospital IT and privacy governance — not
+          conversation starter for hospital IT and privacy governance, not
           for clinical use.
         </p>
         <p className="mt-3 text-xs text-slate-500">
