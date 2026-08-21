@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { NavLink, Outlet, useNavigate, useParams } from 'react-router-dom'
 import { messageStore, patientStore, taskStore } from '../data/mockStores'
+import { visitStore } from '../data/visitStore'
 import { age, formatDate, stripAgeSexPrefix, useStore } from '../lib/utils'
 import { Badge, CountBadge, EmptyState } from './ui'
 
@@ -14,6 +15,10 @@ export default function PatientShell() {
   useStore(patientStore)
   const [editingDischarge, setEditingDischarge] = useState(false)
   const patient = id ? patientStore.get(id) : undefined
+
+  useEffect(() => {
+    if (id) visitStore.markVisited(id)
+  }, [id])
 
   if (!patient) {
     return (

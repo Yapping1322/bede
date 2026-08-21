@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { messageStore, notesStore, patientStore, resultsProvider, taskStore } from '../data/mockStores'
+import { visitStore } from '../data/visitStore'
 import { age, formatDate, stripAgeSexPrefix, timeAgo, useStore } from '../lib/utils'
 import { Badge, Card, CountBadge, EmptyState } from './ui'
 import type { Patient } from '../types'
@@ -27,6 +28,7 @@ export default function WardList() {
   useStore(notesStore)
   useStore(resultsProvider)
   useStore(taskStore)
+  useStore(visitStore)
   const navigate = useNavigate()
   const { id: activeId } = useParams()
   const [sortBy, setSortBy] = useState<SortBy>('bed')
@@ -75,6 +77,8 @@ export default function WardList() {
               ? r.analytes.some((a) => a.flag !== null)
               : r.abnormal,
           )
+          const lastVisited = visitStore.lastVisited(p.id)
+          const isNew = lastVisited !== undefined && lastActivity(p) > lastVisited
           return (
             <Card
               key={p.id}
@@ -105,6 +109,7 @@ export default function WardList() {
                   {p.expectedDischargeDate && (
                     <Badge tone="info">EDD {formatDate(p.expectedDischargeDate)}</Badge>
                   )}
+                  {isNew && <Badge tone="info" solid>New</Badge>}
                   {hasAbnormal && (
                     <span
                       className="h-2.5 w-2.5 rounded-full bg-alert"
