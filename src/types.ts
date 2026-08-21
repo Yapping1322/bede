@@ -74,6 +74,8 @@ export interface Message {
   authorId: string
   createdAt: string // ISO datetime
   text: string
+  /** Sender-chosen only — the system never assigns or infers priority. */
+  priority?: 'fyi' | 'review'
 }
 
 export interface Analyte {

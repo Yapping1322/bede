@@ -3,7 +3,15 @@ import { useParams } from 'react-router-dom'
 import { messageStore } from '../data/mockStores'
 import { useUser } from '../context/UserContext'
 import { formatDateTime, roleLabels, staffById, useStore } from '../lib/utils'
-import { EmptyState } from './ui'
+import { Badge, EmptyState } from './ui'
+
+type PriorityChoice = 'none' | 'fyi' | 'review'
+
+const priorityOptions: { key: PriorityChoice; label: string }[] = [
+  { key: 'none', label: 'None' },
+  { key: 'fyi', label: 'FYI' },
+  { key: 'review', label: 'Review' },
+]
 
 /** Render @Name mentions with highlighting. */
 function MessageText({ text, mine }: { text: string; mine: boolean }) {
@@ -28,6 +36,7 @@ export default function MessagesTab() {
   const { user } = useUser()
   useStore(messageStore)
   const [text, setText] = useState('')
+  const [priority, setPriority] = useState<PriorityChoice>('none')
   const bottomRef = useRef<HTMLDivElement>(null)
   const messages = patientId ? messageStore.forPatient(patientId) : []
 
@@ -41,8 +50,14 @@ export default function MessagesTab() {
   const send = () => {
     const trimmed = text.trim()
     if (!trimmed) return
-    messageStore.post({ patientId, authorId: user.id, text: trimmed })
+    messageStore.post({
+      patientId,
+      authorId: user.id,
+      text: trimmed,
+      ...(priority !== 'none' ? { priority } : {}),
+    })
     setText('')
+    setPriority('none')
   }
 
   return (
@@ -69,6 +84,13 @@ export default function MessagesTab() {
                     </span>
                   </p>
                 )}
+                {m.priority && (
+                  <div className="mb-0.5">
+                    <Badge tone={m.priority === 'review' ? 'warn' : 'neutral'}>
+                      {m.priority === 'review' ? 'Review' : 'FYI'}
+                    </Badge>
+                  </div>
+                )}
                 <p className="text-sm whitespace-pre-wrap">
                   <MessageText text={m.text} mine={mine} />
                 </p>
@@ -89,6 +111,22 @@ export default function MessagesTab() {
       </div>
 
       <div className="sticky bottom-0 bg-slate-100 border-t border-slate-200 px-3 py-2.5">
+        <div className="pb-2 flex items-center gap-1.5">
+          <span className="text-xs text-slate-400">Priority</span>
+          {priorityOptions.map((opt) => (
+            <button
+              key={opt.key}
+              onClick={() => setPriority(opt.key)}
+              className={`text-xs font-semibold rounded-full px-3 py-1.5 ${
+                priority === opt.key
+                  ? 'bg-accent-500 text-white'
+                  : 'bg-white border border-slate-200 text-slate-500 hover:text-slate-700'
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
         <div className="flex gap-2">
           <input
             value={text}
