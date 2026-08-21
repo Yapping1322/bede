@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { messageStore, notesStore, patientStore, resultsProvider } from '../data/mockStores'
+import { messageStore, notesStore, patientStore, resultsProvider, taskStore } from '../data/mockStores'
 import { age, stripAgeSexPrefix, timeAgo, useStore } from '../lib/utils'
 import { Badge, Card, CountBadge, EmptyState } from './ui'
 import type { Patient } from '../types'
@@ -26,6 +26,7 @@ export default function WardList() {
   useStore(patientStore)
   useStore(notesStore)
   useStore(resultsProvider)
+  useStore(taskStore)
   const navigate = useNavigate()
   const { id: activeId } = useParams()
   const [sortBy, setSortBy] = useState<SortBy>('bed')
@@ -68,6 +69,7 @@ export default function WardList() {
       <div className="space-y-2">
         {patients.map((p) => {
           const unread = messageStore.unreadCount(p.id)
+          const openTasks = taskStore.forPatient(p.id).filter((t) => t.status === 'open').length
           const hasAbnormal = resultsProvider.forPatient(p.id).some((r) =>
             r.kind === 'pathology'
               ? r.analytes.some((a) => a.flag !== null)
@@ -95,6 +97,11 @@ export default function WardList() {
                 </div>
                 <div className="flex flex-col items-end gap-1 shrink-0">
                   <CountBadge count={unread} />
+                  {openTasks > 0 && (
+                    <span title="Open tasks">
+                      <CountBadge count={openTasks} />
+                    </span>
+                  )}
                   {hasAbnormal && (
                     <span
                       className="h-2.5 w-2.5 rounded-full bg-alert"
