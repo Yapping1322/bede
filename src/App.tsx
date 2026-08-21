@@ -10,6 +10,7 @@ import NotesTab from './components/NotesTab'
 import MessagesTab from './components/MessagesTab'
 import ResultsTab from './components/ResultsTab'
 import TasksTab from './components/TasksTab'
+import TasksPage from './components/TasksPage'
 import HandoverPage from './components/HandoverPage'
 import SettingsPage from './components/SettingsPage'
 import Landing from './components/Landing'
@@ -48,6 +49,7 @@ const router = createBrowserRouter([
           },
         ],
       },
+      { path: 'tasks', element: <TasksPage /> },
       { path: 'handover', element: <HandoverPage /> },
       { path: 'settings', element: <SettingsPage /> },
       { path: '*', element: <Navigate to="/" replace /> },
