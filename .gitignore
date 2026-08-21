@@ -3,3 +3,5 @@ dist/
 tsconfig.tsbuildinfo
 .vercel/
 .vercel
+.aider*
+LOOP_LEDGER.md
