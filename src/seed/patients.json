@@ -1252,5 +1252,100 @@
       "impression": "Biliary stent in satisfactory position with early improvement in CBD calibre post-ERCP. Known pancreatic head mass and hepatic metastases demonstrated.",
       "abnormal": true
     }
+  ],
+  "tasks": [
+    {
+      "id": "t1",
+      "patientId": "p1",
+      "authorId": "s3",
+      "createdAt": "2026-07-03T11:00:00+08:00",
+      "assigneeId": "s6",
+      "text": "Book non-emergency patient transport for the return trip home — confirm the pickup window with the transport desk.",
+      "status": "open"
+    },
+    {
+      "id": "t2",
+      "patientId": "p2",
+      "authorId": "s2",
+      "createdAt": "2026-07-01T09:30:00+08:00",
+      "assigneeId": "s6",
+      "text": "Schedule a family meeting with the patient's daughter — she's free after 2pm weekdays, check conference room availability with the ward clerk.",
+      "status": "open"
+    },
+    {
+      "id": "t3",
+      "patientId": "p3",
+      "authorId": "s4",
+      "createdAt": "2026-06-29T09:00:00+08:00",
+      "text": "Chase pharmacy for the discharge medication packing list — form hasn't come back from dispensary yet.",
+      "status": "open"
+    },
+    {
+      "id": "t4",
+      "patientId": "p4",
+      "authorId": "s2",
+      "createdAt": "2026-07-04T10:00:00+08:00",
+      "assigneeId": "s5",
+      "text": "Log a job with the equipment desk for a replacement infusion pump — current unit flagged for servicing.",
+      "status": "open"
+    },
+    {
+      "id": "t5",
+      "patientId": "p5",
+      "authorId": "s6",
+      "createdAt": "2026-07-02T08:00:00+08:00",
+      "assigneeId": "s3",
+      "text": "Confirm the daily transport roster with the transport desk for the patient's off-ward appointments this week.",
+      "status": "open"
+    },
+    {
+      "id": "t6",
+      "patientId": "p6",
+      "authorId": "s5",
+      "createdAt": "2026-07-04T15:00:00+08:00",
+      "assigneeId": "s2",
+      "text": "Book the outpatient follow-up clinic slot and confirm the date with the patient.",
+      "status": "done",
+      "completedAt": "2026-07-04T16:30:00+08:00",
+      "completedById": "s2"
+    },
+    {
+      "id": "t7",
+      "patientId": "p1",
+      "authorId": "s2",
+      "createdAt": "2026-07-05T09:30:00+08:00",
+      "text": "Chase medical records for a copy of the admission paperwork — ward clerk says the original is missing from the chart.",
+      "status": "open"
+    },
+    {
+      "id": "t8",
+      "patientId": "p2",
+      "authorId": "s6",
+      "createdAt": "2026-06-30T10:00:00+08:00",
+      "assigneeId": "s5",
+      "text": "Send through the social work referral paperwork for discharge planning and confirm it's been logged.",
+      "status": "done",
+      "completedAt": "2026-07-01T09:15:00+08:00",
+      "completedById": "s5"
+    },
+    {
+      "id": "t9",
+      "patientId": "p3",
+      "authorId": "s3",
+      "createdAt": "2026-06-28T13:00:00+08:00",
+      "assigneeId": "s6",
+      "text": "Confirm the chaplaincy visit time with pastoral care admin and let the family know.",
+      "status": "done",
+      "completedAt": "2026-06-28T14:30:00+08:00",
+      "completedById": "s6"
+    },
+    {
+      "id": "t10",
+      "patientId": "p5",
+      "authorId": "s1",
+      "createdAt": "2026-07-01T17:30:00+08:00",
+      "text": "Get the specialist referral letter drafted and sent — needs to go out today.",
+      "status": "open"
+    }
   ]
 }

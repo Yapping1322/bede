@@ -1,10 +1,11 @@
-import type { Message, Note, Patient, ReportSummary, Result, SeedData } from '../types'
+import type { Message, Note, Patient, ReportSummary, Result, SeedData, Task } from '../types'
 import type {
   MessageStore,
   NotesStore,
   PatientStore,
   ResultsProvider,
   SummaryProvider,
+  TaskStore,
 } from './providers'
 import seedJson from '../seed/patients.json'
 import { summariseReport } from '../lib/reportSummary'
@@ -143,6 +144,53 @@ class MockResultsProvider extends Emitter implements ResultsProvider {
   }
 }
 
+class MockTaskStore extends Emitter implements TaskStore {
+  private tasks: Task[] = [...seed.tasks]
+
+  list(): Task[] {
+    return this.tasks
+  }
+
+  forPatient(patientId: string): Task[] {
+    return this.tasks.filter((t) => t.patientId === patientId).sort(byNewest)
+  }
+
+  add(task: Omit<Task, 'id' | 'createdAt' | 'status'>): void {
+    this.tasks.push({
+      ...task,
+      id: `t-local-${this.tasks.length + 1}`,
+      createdAt: new Date().toISOString(),
+      status: 'open',
+    })
+    this.emit()
+  }
+
+  complete(taskId: string, byId: string): void {
+    const task = this.tasks.find((t) => t.id === taskId)
+    if (!task) return
+    task.status = 'done'
+    task.completedAt = new Date().toISOString()
+    task.completedById = byId
+    this.emit()
+  }
+
+  reopen(taskId: string): void {
+    const task = this.tasks.find((t) => t.id === taskId)
+    if (!task) return
+    task.status = 'open'
+    task.completedAt = undefined
+    task.completedById = undefined
+    this.emit()
+  }
+
+  assign(taskId: string, assigneeId: string | undefined): void {
+    const task = this.tasks.find((t) => t.id === taskId)
+    if (!task) return
+    task.assigneeId = assigneeId
+    this.emit()
+  }
+}
+
 /** Demo engine: runs in the tab, no network. v2 swaps this for the on-prem
  * model client without the UI noticing. */
 class LocalSummaryProvider implements SummaryProvider {
@@ -157,3 +205,4 @@ export const notesStore: NotesStore = new MockNotesStore()
 export const messageStore: MessageStore = new MockMessageStore()
 export const resultsProvider: ResultsProvider = new MockResultsProvider()
 export const summaryProvider: SummaryProvider = new LocalSummaryProvider()
+export const taskStore: TaskStore = new MockTaskStore()
