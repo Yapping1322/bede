@@ -12,6 +12,7 @@ for decisions/constraints. Formerly "Ward Companion".
 npm install
 npm run dev        # http://localhost:5173
 npm run build      # production build to dist/
+npm test           # unit tests via Vitest
 ```
 
 ## Deploy
