@@ -1,6 +1,13 @@
-import type { Message, Note, Patient, Result, SeedData } from '../types'
-import type { MessageStore, NotesStore, PatientStore, ResultsProvider } from './providers'
+import type { Message, Note, Patient, ReportSummary, Result, SeedData } from '../types'
+import type {
+  MessageStore,
+  NotesStore,
+  PatientStore,
+  ResultsProvider,
+  SummaryProvider,
+} from './providers'
 import seedJson from '../seed/patients.json'
+import { summariseReport } from '../lib/reportSummary'
 
 // Demo-only stores: seed JSON + in-memory mutations. Nothing persists across
 // a reload, by design — the prototype holds no data anywhere but this tab.
@@ -136,8 +143,17 @@ class MockResultsProvider extends Emitter implements ResultsProvider {
   }
 }
 
+/** Demo engine: runs in the tab, no network. v2 swaps this for the on-prem
+ * model client without the UI noticing. */
+class LocalSummaryProvider implements SummaryProvider {
+  async summarise(result: Result): Promise<ReportSummary> {
+    return summariseReport(result)
+  }
+}
+
 export const staff = seed.staff
 export const patientStore: PatientStore = new MockPatientStore()
 export const notesStore: NotesStore = new MockNotesStore()
 export const messageStore: MessageStore = new MockMessageStore()
 export const resultsProvider: ResultsProvider = new MockResultsProvider()
+export const summaryProvider: SummaryProvider = new LocalSummaryProvider()
