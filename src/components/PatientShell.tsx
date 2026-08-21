@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { NavLink, Outlet, useNavigate, useParams } from 'react-router-dom'
 import { messageStore, patientStore, taskStore } from '../data/mockStores'
 import { age, formatDate, stripAgeSexPrefix, useStore } from '../lib/utils'
@@ -10,6 +11,8 @@ export default function PatientShell() {
   const navigate = useNavigate()
   useStore(messageStore)
   useStore(taskStore)
+  useStore(patientStore)
+  const [editingDischarge, setEditingDischarge] = useState(false)
   const patient = id ? patientStore.get(id) : undefined
 
   if (!patient) {
@@ -79,6 +82,27 @@ export default function PatientShell() {
                 ? `Allergies: ${patient.allergies.join(', ')}`
                 : 'NKDA'}
             </Badge>
+            {editingDischarge ? (
+              <input
+                type="date"
+                autoFocus
+                defaultValue={patient.expectedDischargeDate ?? ''}
+                onChange={(e) => {
+                  patientStore.setExpectedDischarge(patient.id, e.target.value || undefined)
+                  setEditingDischarge(false)
+                }}
+                onBlur={() => setEditingDischarge(false)}
+                className="rounded-lg border border-slate-300 bg-white px-2 py-0.5 text-xs text-slate-600 focus:outline-none focus:border-accent-500"
+              />
+            ) : (
+              <button onClick={() => setEditingDischarge(true)}>
+                <Badge tone={patient.expectedDischargeDate ? 'info' : 'neutral'} solid>
+                  {patient.expectedDischargeDate
+                    ? `EDD ${formatDate(patient.expectedDischargeDate)}`
+                    : '+ EDD'}
+                </Badge>
+              </button>
+            )}
           </div>
           <nav className="mt-2 flex">
             {tabs.map((t) => (

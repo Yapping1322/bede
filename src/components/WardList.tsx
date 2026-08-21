@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { messageStore, notesStore, patientStore, resultsProvider, taskStore } from '../data/mockStores'
-import { age, stripAgeSexPrefix, timeAgo, useStore } from '../lib/utils'
+import { age, formatDate, stripAgeSexPrefix, timeAgo, useStore } from '../lib/utils'
 import { Badge, Card, CountBadge, EmptyState } from './ui'
 import type { Patient } from '../types'
 
@@ -101,6 +101,9 @@ export default function WardList() {
                     <span title="Open tasks">
                       <CountBadge count={openTasks} />
                     </span>
+                  )}
+                  {p.expectedDischargeDate && (
+                    <Badge tone="info">EDD {formatDate(p.expectedDischargeDate)}</Badge>
                   )}
                   {hasAbnormal && (
                     <span
