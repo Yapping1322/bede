@@ -151,7 +151,7 @@ class MockResultsProvider extends Emitter implements ResultsProvider {
   }
 }
 
-class MockTaskStore extends Emitter implements TaskStore {
+export class MockTaskStore extends Emitter implements TaskStore {
   private tasks: Task[] = [...seed.tasks]
 
   list(): Task[] {

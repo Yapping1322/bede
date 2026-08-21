@@ -103,7 +103,8 @@ to exactly that contract, before this research existed:
   negative / called normal), never clinically — the engine does not decide what
   is abnormal
 - verified: all 7 seed imaging reports, every span reproduces its source text
-  character-for-character
+  character-for-character, now enforced by the automated suite at
+  `src/lib/reportSummary.test.ts` (runs on every `npm test`)
 
 **This is the product's defensible position, not a compliance afterthought.**
 Anything that adds a conclusion of its own crosses the line and needs a written
