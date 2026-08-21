@@ -60,8 +60,25 @@ The boundary is **the data, not the tool**:
   (Whisper for transcription) running on hospital-controlled hardware, PHI
   never leaves the network. This is the only version hospital governance
   passes today.
-- **Cloud AI APIs on PHI** — even with zero-retention enterprise contracts,
-  assume hospital privacy officers say no in 2026. Don't architect around it.
+- **Cloud AI on PHI — corrected 2026-08-21.** The earlier position here ("even
+  with zero-retention enterprise contracts, assume hospital privacy officers say
+  no in 2026; don't architect around it") is not supported by WA's published
+  policy. The **WA Health Cloud Policy MP 0140/20**, mandatory under s.26(2)(k)
+  Health Services Act 2016, defines three zones: **Zone A** HealthNext (WA
+  Health's own cloud), **Zone B** third-party Australian-hosted, **Zone C**
+  offshore. Zone B is permitted at medium risk subject to a documented risk
+  assessment, the Cloud Service Requirements, the ICT Governance and Approvals
+  Process, and notification to HSS infosec. The only bar is conditional — do not
+  proceed "if the confidentiality of personal information cannot be adequately
+  understood, managed or controlled". There is no on-premise-only rule anywhere
+  in the framework. Corroborated independently: both Australian scribe
+  incumbents run AU-region cloud today and no state health department ban was
+  found. Note the policy states contracted health entities are not WA health
+  system entities — SJOG and Ramsay set their own rules, and Ramsay runs a
+  national Google Cloud strategy.
+  **Practical read:** Zone B AU-region is the default target and the thing to
+  write the risk assessment for. Zone C offshore stays disfavoured. On-prem
+  open-weight is the fallback, not the premise.
 - **De-identification** as a boundary is fragile (re-identification risk);
   don't rely on it early.
 
