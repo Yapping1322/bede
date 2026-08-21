@@ -1,4 +1,4 @@
-import type { Message, Note, Patient, ReportSummary, Result } from '../types'
+import type { Message, Note, Patient, ReportSummary, Result, Task } from '../types'
 
 // Interface layer between the UI and wherever data comes from.
 // The MVP backs these with local seed JSON (see mockStores.ts); v2 swaps in
@@ -32,6 +32,19 @@ export interface MessageStore extends Subscribable {
 
 export interface ResultsProvider extends Subscribable {
   forPatient(patientId: string): Result[]
+}
+
+/** Ward administrative/logistics coordination — booking transport, chasing
+ * paperwork, confirming outpatient follow-up, scheduling a family meeting.
+ * Tasks are only ever created, assigned and closed by explicit human
+ * action; nothing here is generated or prioritised by the system. */
+export interface TaskStore extends Subscribable {
+  list(): Task[]
+  forPatient(patientId: string): Task[]
+  add(task: Omit<Task, 'id' | 'createdAt' | 'status'>): void
+  complete(taskId: string, byId: string): void
+  reopen(taskId: string): void
+  assign(taskId: string, assigneeId: string | undefined): void
 }
 
 /** Restates a report the issuing provider already signed off. It must never

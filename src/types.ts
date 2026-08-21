@@ -109,6 +109,24 @@ export interface ImagingResult {
 
 export type Result = PathologyResult | ImagingResult
 
+export type TaskStatus = 'open' | 'done'
+
+/** A ward administrative/logistics task — booking transport, chasing forms,
+ * confirming outpatient follow-up, scheduling a family meeting, and the
+ * like. Created, assigned and closed only by explicit human action; never
+ * generated or prioritised by the system. */
+export interface Task {
+  id: string
+  patientId: string
+  authorId: string
+  createdAt: string // ISO datetime
+  assigneeId?: string
+  text: string
+  status: TaskStatus
+  completedAt?: string
+  completedById?: string
+}
+
 /** How a restated line relates to the report it came from. Grammatical, not
  * clinical: `excluded` = the reporting doctor wrote a negative ("no pleural
  * effusion"), `normal` = they called something normal, `stated` = everything
@@ -145,4 +163,5 @@ export interface SeedData {
   notes: Note[]
   messages: Message[]
   results: Result[]
+  tasks: Task[]
 }
