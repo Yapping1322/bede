@@ -109,6 +109,36 @@ export interface ImagingResult {
 
 export type Result = PathologyResult | ImagingResult
 
+/** How a restated line relates to the report it came from. Grammatical, not
+ * clinical: `excluded` = the reporting doctor wrote a negative ("no pleural
+ * effusion"), `normal` = they called something normal, `stated` = everything
+ * else they positively described. */
+export type LineKind = 'stated' | 'excluded' | 'normal'
+
+/** One line of a restatement, with the character span it was lifted from so
+ * the reader can check it against the source on the same screen. */
+export interface SummaryLine {
+  text: string
+  kind: LineKind
+  /** [start, end) offsets into the source report text. */
+  span: [number, number]
+}
+
+/** A restatement of a report the provider already issued. Nothing here is a
+ * new clinical conclusion — see REGULATORY_AU.md §1, interpretation is the
+ * SaMD line. `impression` is the reporting doctor's own words, never rewritten. */
+export interface ReportSummary {
+  resultId: string
+  /** The provider's own report sections, if it was structured. */
+  sections: { heading: string; body: string }[]
+  lines: SummaryLine[]
+  /** Measurements lifted verbatim — what gets tracked between studies. */
+  measurements: SummaryLine[]
+  impression: string
+  /** Shown to the clinician so they always know what produced this. */
+  engine: string
+}
+
 export interface SeedData {
   staff: Staff[]
   patients: Patient[]

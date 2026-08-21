@@ -1,4 +1,4 @@
-import type { Message, Note, Patient, Result } from '../types'
+import type { Message, Note, Patient, ReportSummary, Result } from '../types'
 
 // Interface layer between the UI and wherever data comes from.
 // The MVP backs these with local seed JSON (see mockStores.ts); v2 swaps in
@@ -32,4 +32,13 @@ export interface MessageStore extends Subscribable {
 
 export interface ResultsProvider extends Subscribable {
   forPatient(patientId: string): Result[]
+}
+
+/** Restates a report the issuing provider already signed off. It must never
+ * add a clinical conclusion of its own — REGULATORY_AU.md §1. Async because
+ * the production engine is a model call on hospital-controlled hardware
+ * (OPERATIONS.md §4), not a local function; the demo implementation just
+ * resolves immediately. */
+export interface SummaryProvider {
+  summarise(result: Result): Promise<ReportSummary>
 }
