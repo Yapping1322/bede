@@ -36,9 +36,9 @@ export interface ResultsProvider extends Subscribable {
 
 /** Restates a report the issuing provider already signed off. It must never
  * add a clinical conclusion of its own — REGULATORY_AU.md §1. Async because
- * the production engine is a model call on hospital-controlled hardware
- * (OPERATIONS.md §4), not a local function; the demo implementation just
- * resolves immediately. */
+ * the production engine is a model call under hospital governance (on-prem or
+ * approved AU-hosted cloud) (OPERATIONS.md §4), not a local function; the demo
+ * implementation just resolves immediately. */
 export interface SummaryProvider {
   summarise(result: Result): Promise<ReportSummary>
 }

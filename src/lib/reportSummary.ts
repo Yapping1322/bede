@@ -8,9 +8,9 @@ import type { LineKind, ReportSummary, Result, SummaryLine } from '../types'
 // negative / called normal), and quotes their impression verbatim. Every line
 // carries a character span back into the source text.
 //
-// Why rules and not a model here: OPERATIONS.md §4 — cloud AI on PHI does not
-// pass hospital governance, and the demo makes no third-party requests. The
-// production engine is an on-prem open-weight model behind SummaryProvider.
+// Why rules and not a model here: OPERATIONS.md §4 — the production engine runs
+// under hospital governance either on-prem open-weight or AU-hosted Zone B cloud
+// with a documented risk assessment, and the demo makes no third-party requests.
 // This exists so the interface, the provenance contract and the UI are settled
 // before that lands. The moment the engine adds anything beyond restatement it
 // crosses the SaMD line in REGULATORY_AU.md §1 — that is a deliberate,

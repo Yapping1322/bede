@@ -55,11 +55,14 @@ The boundary is **the data, not the tool**:
   synthetic seed data. Claude/Copilot can build, refactor and maintain Bede
   forever without a privacy question, because the code never contains
   patient data. That separation is the reason the demo was built this way.
-- **AI on patient data = on-prem only.** The AI-layer plan (name TBD —
+- **AI on patient data = on-prem or approved AU-hosted cloud.** The AI-layer
+  plan (name TBD —
   "Stella" dropped 2026-07-06, trademark conflict): open-weight models
   (Whisper for transcription) running on hospital-controlled hardware, PHI
-  never leaves the network. This is the only version hospital governance
-  passes today.
+  never leaves the network. On-prem open-weight remains a valid deployment mode,
+  and per the dated 2026-08-21 correction in this same section, WA Health cloud
+  policy (MP 0140/20) also permits AU-hosted Zone B cloud with a documented risk
+  assessment — refer to that correction rather than duplicating it.
 - **Cloud AI on PHI — corrected 2026-08-21.** The earlier position here ("even
   with zero-retention enterprise contracts, assume hospital privacy officers say
   no in 2026; don't architect around it") is not supported by WA's published
