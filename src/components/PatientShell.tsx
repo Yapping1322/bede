@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useNavigate, useParams } from 'react-router-dom'
-import { messageStore, patientStore } from '../data/mockStores'
+import { messageStore, patientStore, taskStore } from '../data/mockStores'
 import { age, formatDate, stripAgeSexPrefix, useStore } from '../lib/utils'
 import { Badge, CountBadge, EmptyState } from './ui'
 
@@ -9,6 +9,7 @@ export default function PatientShell() {
   const { id } = useParams()
   const navigate = useNavigate()
   useStore(messageStore)
+  useStore(taskStore)
   const patient = id ? patientStore.get(id) : undefined
 
   if (!patient) {
@@ -29,11 +30,13 @@ export default function PatientShell() {
   }
 
   const unread = messageStore.unreadCount(patient.id)
+  const openTasks = taskStore.forPatient(patient.id).filter((t) => t.status === 'open').length
 
   const tabs = [
     { to: 'notes', label: 'Notes', badge: 0 },
     { to: 'messages', label: 'Messages', badge: unread },
     { to: 'results', label: 'Results', badge: 0 },
+    { to: 'tasks', label: 'Tasks', badge: openTasks },
   ]
 
   return (

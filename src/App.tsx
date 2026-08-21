@@ -9,6 +9,7 @@ import PatientShell from './components/PatientShell'
 import NotesTab from './components/NotesTab'
 import MessagesTab from './components/MessagesTab'
 import ResultsTab from './components/ResultsTab'
+import TasksTab from './components/TasksTab'
 import HandoverPage from './components/HandoverPage'
 import SettingsPage from './components/SettingsPage'
 import Landing from './components/Landing'
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
               { path: 'notes', element: <NotesTab /> },
               { path: 'messages', element: <MessagesTab /> },
               { path: 'results', element: <ResultsTab /> },
+              { path: 'tasks', element: <TasksTab /> },
             ],
           },
         ],
