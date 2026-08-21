@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { resultsProvider } from '../data/mockStores'
 import { formatDateTime, useStore } from '../lib/utils'
 import { Badge, Card, EmptyState, Timeline, TimelineItem } from './ui'
+import ReportSummaryCard from './ReportSummaryCard'
 import type { PathologyResult, Result } from '../types'
 
 function flagStyle(flag: PathologyResult['analytes'][number]['flag']): string {
@@ -114,6 +115,9 @@ export default function ResultsTab() {
                     <p className="text-xs text-slate-500 pb-2">
                       Collected {formatDateTime(r.collectedAt)}
                     </p>
+                    <div className="pb-3">
+                      <ReportSummaryCard result={r} />
+                    </div>
                     <table className="w-full text-sm">
                       <thead>
                         <tr className="text-left text-xs text-slate-500 border-b border-slate-200">
@@ -145,20 +149,7 @@ export default function ResultsTab() {
                     <p className="text-xs text-slate-500">
                       Performed {formatDateTime(r.performedAt)}
                     </p>
-                    <div>
-                      <h3 className="text-xs font-semibold text-slate-600 uppercase tracking-wide">
-                        Report
-                      </h3>
-                      <p className="mt-1 text-sm text-slate-700 whitespace-pre-wrap">
-                        {r.reportText}
-                      </p>
-                    </div>
-                    <div>
-                      <h3 className="text-xs font-semibold text-slate-600 uppercase tracking-wide">
-                        Impression
-                      </h3>
-                      <p className="mt-1 text-sm text-slate-900 font-medium">{r.impression}</p>
-                    </div>
+                    <ReportSummaryCard result={r} />
                     <button
                       disabled
                       className="mt-1 w-full border border-slate-300 text-slate-400 text-sm rounded-lg py-2 cursor-not-allowed"
