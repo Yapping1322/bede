@@ -60,7 +60,14 @@ export default function HandoverPage() {
 
               {latest ? (
                 <dl className="mt-2 space-y-1.5">
-                  {latest.kind === 'progress' ? (
+                  {latest.kind === 'discharge-planning' ? (
+                    <div>
+                      <dt className="inline text-xs font-bold text-slate-600 uppercase">
+                        Discharge planning:{' '}
+                      </dt>
+                      <dd className="inline text-sm text-slate-800">{latest.body}</dd>
+                    </div>
+                  ) : latest.kind === 'progress' ? (
                     <div>
                       <dt className="inline text-xs font-bold text-slate-600 uppercase">
                         Latest note:{' '}

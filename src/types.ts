@@ -60,9 +60,9 @@ export interface Note {
   authorId: string
   createdAt: string // ISO datetime
   /** Seed notes predate `kind` — absent means 'isbar'. */
-  kind?: 'isbar' | 'progress'
+  kind?: 'isbar' | 'progress' | 'discharge-planning'
   isbar?: IsbarNote
-  /** Free-text progress note body (kind === 'progress'). */
+  /** Free-text note body (kind === 'progress' or 'discharge-planning'). */
   body?: string
   attachments?: NoteAttachment[]
   clarifications?: Clarification[]

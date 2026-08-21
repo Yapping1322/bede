@@ -201,7 +201,7 @@ export default function NotesTab() {
   const { user } = useUser()
   useStore(notesStore)
   const [composing, setComposing] = useState(false)
-  const [kind, setKind] = useState<'isbar' | 'progress'>('isbar')
+  const [kind, setKind] = useState<'isbar' | 'progress' | 'discharge-planning'>('isbar')
   const [draft, setDraft] = useState<IsbarNote>(emptyIsbar)
   const [body, setBody] = useState('')
   const [attachments, setAttachments] = useState<NoteAttachment[]>([])
@@ -251,6 +251,7 @@ export default function NotesTab() {
               [
                 { value: 'isbar', label: 'ISBAR (handover)' },
                 { value: 'progress', label: 'Progress note' },
+                { value: 'discharge-planning', label: 'Discharge planning' },
               ] as const
             ).map((opt) => (
               <button
@@ -288,7 +289,11 @@ export default function NotesTab() {
               <textarea
                 value={body}
                 onChange={(e) => setBody(e.target.value)}
-                placeholder="Free-text ward round / progress entry"
+                placeholder={
+                  kind === 'discharge-planning'
+                    ? 'Placement, transport, family meeting, equipment, referrals…'
+                    : 'Free-text ward round / progress entry'
+                }
                 rows={6}
                 className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:border-accent-500"
               />
@@ -323,7 +328,15 @@ export default function NotesTab() {
         <Timeline>
           {notes.map((note) => {
             const author = staffById(note.authorId)
-            const isProgress = note.kind === 'progress'
+            const isIsbar = (note.kind ?? 'isbar') === 'isbar'
+            const kindLabel =
+              note.kind === 'discharge-planning'
+                ? 'Discharge planning'
+                : note.kind === 'progress'
+                  ? 'Progress'
+                  : 'ISBAR'
+            const kindTone =
+              note.kind === 'discharge-planning' ? 'purple' : note.kind === 'progress' ? 'neutral' : 'info'
             const openClarifications = (note.clarifications ?? []).filter((c) => !c.reply)
             return (
               <TimelineItem key={note.id}>
@@ -336,9 +349,7 @@ export default function NotesTab() {
                       </span>
                     </span>
                     <span className="flex items-center gap-1.5 shrink-0">
-                      <Badge tone={isProgress ? 'neutral' : 'info'}>
-                        {isProgress ? 'Progress' : 'ISBAR'}
-                      </Badge>
+                      <Badge tone={kindTone}>{kindLabel}</Badge>
                       {openClarifications.length > 0 && <Badge tone="warn">Clarify?</Badge>}
                       <time className="text-xs text-slate-500">
                         {formatDateTime(note.createdAt)}
@@ -346,7 +357,7 @@ export default function NotesTab() {
                     </span>
                   </header>
 
-                  {isProgress ? (
+                  {!isIsbar ? (
                     <p className="mt-2 text-sm text-slate-700 whitespace-pre-wrap">{note.body}</p>
                   ) : (
                     <dl className="mt-2 space-y-2">
