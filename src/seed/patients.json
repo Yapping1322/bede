@@ -45,7 +45,8 @@
       "allergies": [
         "Penicillin — rash"
       ],
-      "resusStatus": "Full resuscitation"
+      "resusStatus": "Full resuscitation",
+      "expectedDischargeDate": "2026-07-08"
     },
     {
       "id": "p2",
@@ -88,7 +89,8 @@
       "allergies": [
         "Sulfonamides — anaphylaxis"
       ],
-      "resusStatus": "Full resuscitation"
+      "resusStatus": "Full resuscitation",
+      "expectedDischargeDate": "2026-07-09"
     },
     {
       "id": "p5",
@@ -103,7 +105,8 @@
       "allergies": [
         "NSAIDs — GI bleed"
       ],
-      "resusStatus": "NFR — for ward-based care"
+      "resusStatus": "NFR — for ward-based care",
+      "expectedDischargeDate": "2026-07-10"
     },
     {
       "id": "p6",
@@ -118,7 +121,8 @@
       "allergies": [
         "Contrast dye — urticaria (pre-medicated)"
       ],
-      "resusStatus": "Full resuscitation"
+      "resusStatus": "Full resuscitation",
+      "expectedDischargeDate": "2026-07-07"
     }
   ],
   "notes": [

@@ -14,6 +14,7 @@ interface Subscribable {
 export interface PatientStore extends Subscribable {
   list(): Patient[]
   get(id: string): Patient | undefined
+  setExpectedDischarge(patientId: string, isoDate: string | undefined): void
 }
 
 export interface NotesStore extends Subscribable {

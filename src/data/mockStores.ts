@@ -43,6 +43,13 @@ class MockPatientStore extends Emitter implements PatientStore {
   get(id: string): Patient | undefined {
     return this.patients.find((p) => p.id === id)
   }
+
+  setExpectedDischarge(patientId: string, isoDate: string | undefined): void {
+    const patient = this.patients.find((p) => p.id === patientId)
+    if (!patient) return
+    patient.expectedDischargeDate = isoDate
+    this.emit()
+  }
 }
 
 class MockNotesStore extends Emitter implements NotesStore {

@@ -23,6 +23,9 @@ export interface Patient {
   admittedAt: string // ISO datetime
   allergies: string[]
   resusStatus: string
+  /** Expected discharge date — ward logistics/coordination info set by
+   * staff. Never computed or predicted by the system. */
+  expectedDischargeDate?: string // ISO date
 }
 
 export interface IsbarNote {
