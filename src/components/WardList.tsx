@@ -12,11 +12,14 @@ type SortBy = 'bed' | 'recent'
  * falling back to admission. ISO strings compare lexicographically. */
 function lastActivity(p: Patient): string {
   const messages = messageStore.forPatient(p.id)
+  const tasks = taskStore.forPatient(p.id)
   const stamps = [
     p.admittedAt,
     notesStore.forPatient(p.id)[0]?.createdAt,
     messages[messages.length - 1]?.createdAt,
     resultsProvider.forPatient(p.id)[0]?.reportedAt,
+    ...tasks.map((t) => t.createdAt),
+    ...tasks.map((t) => t.completedAt).filter((s): s is string => Boolean(s)),
   ].filter((s): s is string => Boolean(s))
   stamps.sort()
   return stamps[stamps.length - 1]
