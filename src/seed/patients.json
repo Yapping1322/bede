@@ -357,7 +357,7 @@
         "situation": "Day 5. Bilirubin 88 µmol/L — continued improvement. Eating well, pain minimal, no fever. Jaundice clinically fading.",
         "background": "LFTs improving: ALP 320 (from 610), GGT 280 (from 540), ALT normalising. Lipase normal. BSL normal. No stent complications.",
         "assessment": "Successful biliary decompression. On track for discharge. Gemcitabine/nab-paclitaxel to be discussed in oncology outpatient once bilirubin <50 — likely next week.",
-        "recommendation": "Plan discharge tomorrow if clinically well and bilirubin continues to fall. Outpatient LFTs in 3 days. Oncology review appointment booked for 14 July. GP letter to be dictated."
+        "recommendation": "Plan discharge tomorrow if clinically well and bilirubin continues to fall. Outpatient LFTs in 3 days. Oncology review appointment booked for 29 August. GP letter to be dictated."
       }
     }
   ],
@@ -521,7 +521,7 @@
       "patientId": "p5",
       "authorId": "s2",
       "createdAt": "2026-08-17T09:00:00+08:00",
-      "text": "MRI confirmed T8 epidural met with cord compression. Rad onc reviewed — EBRT 5 fractions starting 4 July. Dexamethasone BD continuing."
+      "text": "MRI confirmed T8 epidural met with cord compression. Rad onc reviewed — EBRT 5 fractions starting 19 August. Dexamethasone BD continuing."
     },
     {
       "id": "m24",
@@ -563,7 +563,7 @@
       "patientId": "p6",
       "authorId": "s2",
       "createdAt": "2026-08-19T14:20:00+08:00",
-      "text": "Yes @Jess — book outpatient LFTs 3 days post-discharge and CC to oncology. Oncology clinic 14 July already organised."
+      "text": "Yes @Jess — book outpatient LFTs 3 days post-discharge and CC to oncology. Oncology clinic 29 August already organised."
     },
     {
       "id": "m30",
