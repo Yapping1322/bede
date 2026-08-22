@@ -36,28 +36,28 @@
       "id": "p1",
       "mrn": "WMC-204771",
       "name": "Raymond Farquhar",
-      "dob": "1961-03-14",
+      "dob": "1961-04-29",
       "sex": "M",
       "bed": "12A",
       "admittingTeam": "Medical Oncology — Dr Nwosu",
       "statusLine": "65M mCRC day 8 FOLFOX cycle 6 — neutropenic fever D2, on pip-tazo, cultures pending, ANC 0.3",
-      "admittedAt": "2026-07-03T08:45:00+08:00",
+      "admittedAt": "2026-08-18T08:45:00+08:00",
       "allergies": [
         "Penicillin — rash"
       ],
       "resusStatus": "Full resuscitation",
-      "expectedDischargeDate": "2026-07-08"
+      "expectedDischargeDate": "2026-08-23"
     },
     {
       "id": "p2",
       "mrn": "WMC-198342",
       "name": "Colleen Maher",
-      "dob": "1944-11-28",
+      "dob": "1945-01-13",
       "sex": "F",
       "bed": "12B",
       "admittingTeam": "Medical Oncology — Dr Nwosu",
       "statusLine": "81F new extensive-stage SCLC — symptomatic SIADH Na 118, fluid-restricted 800 mL/day, oncology plan pending",
-      "admittedAt": "2026-06-29T14:20:00+08:00",
+      "admittedAt": "2026-08-14T14:20:00+08:00",
       "allergies": [],
       "resusStatus": "NFR — for ward-based care"
     },
@@ -65,12 +65,12 @@
       "id": "p3",
       "mrn": "WMC-211056",
       "name": "Diane Salonius",
-      "dob": "1951-07-04",
+      "dob": "1951-08-19",
       "sex": "F",
       "bed": "14A",
       "admittingTeam": "Medical Oncology — Dr Nwosu",
       "statusLine": "74F metastatic breast ca — palliative pathway, comfort measures, NFR, symptom management focus",
-      "admittedAt": "2026-06-28T10:15:00+08:00",
+      "admittedAt": "2026-08-13T10:15:00+08:00",
       "allergies": [
         "Morphine — nausea/vomiting"
       ],
@@ -80,49 +80,49 @@
       "id": "p4",
       "mrn": "WMC-206893",
       "name": "Thomas Ngata",
-      "dob": "1972-09-22",
+      "dob": "1972-11-07",
       "sex": "M",
       "bed": "14B",
       "admittingTeam": "Medical Oncology — Dr Nwosu",
       "statusLine": "53M diffuse large B-cell lymphoma — day 3 R-CHOP cycle 1, TLS monitoring, K and urate elevated",
-      "admittedAt": "2026-07-03T07:30:00+08:00",
+      "admittedAt": "2026-08-18T07:30:00+08:00",
       "allergies": [
         "Sulfonamides — anaphylaxis"
       ],
       "resusStatus": "Full resuscitation",
-      "expectedDischargeDate": "2026-07-09"
+      "expectedDischargeDate": "2026-08-24"
     },
     {
       "id": "p5",
       "mrn": "WMC-200415",
       "name": "Gerald Whitmore",
-      "dob": "1949-02-08",
+      "dob": "1949-03-26",
       "sex": "M",
       "bed": "15A",
       "admittingTeam": "Medical Oncology — Dr Nwosu",
       "statusLine": "77M metastatic prostate ca — cord compression watch, dexamethasone 8 mg BD, urgent MRI spine today",
-      "admittedAt": "2026-07-01T16:00:00+08:00",
+      "admittedAt": "2026-08-16T16:00:00+08:00",
       "allergies": [
         "NSAIDs — GI bleed"
       ],
       "resusStatus": "NFR — for ward-based care",
-      "expectedDischargeDate": "2026-07-10"
+      "expectedDischargeDate": "2026-08-25"
     },
     {
       "id": "p6",
       "mrn": "WMC-215330",
       "name": "Margaret Lau",
-      "dob": "1958-05-19",
+      "dob": "1958-07-04",
       "sex": "F",
       "bed": "15B",
       "admittingTeam": "Medical Oncology — Dr Nwosu",
       "statusLine": "67F pancreatic ca — obstructive jaundice, ERCP + stent D3, bilirubin trending down, tolerating fluids",
-      "admittedAt": "2026-07-02T09:50:00+08:00",
+      "admittedAt": "2026-08-17T09:50:00+08:00",
       "allergies": [
         "Contrast dye — urticaria (pre-medicated)"
       ],
       "resusStatus": "Full resuscitation",
-      "expectedDischargeDate": "2026-07-07"
+      "expectedDischargeDate": "2026-08-22"
     }
   ],
   "notes": [
@@ -130,7 +130,7 @@
       "id": "n1",
       "patientId": "p1",
       "authorId": "s3",
-      "createdAt": "2026-07-03T10:30:00+08:00",
+      "createdAt": "2026-08-18T10:30:00+08:00",
       "isbar": {
         "identify": "Raymond Farquhar, 65M, MRN WMC-204771, bed 12A. Admitting note — Dr O'Brien, RMO.",
         "situation": "Presented with fever 38.9°C, rigors, and malaise. Day 8 post-FOLFOX cycle 6 for metastatic colorectal carcinoma.",
@@ -143,7 +143,7 @@
       "id": "n2",
       "patientId": "p1",
       "authorId": "s2",
-      "createdAt": "2026-07-04T09:15:00+08:00",
+      "createdAt": "2026-08-19T09:15:00+08:00",
       "isbar": {
         "identify": "Raymond Farquhar, 65M, MRN WMC-204771, bed 12A. Ward round note — Dr Krishnamurthy, registrar.",
         "situation": "Day 2 febrile neutropenia. Overnight temperature 38.4°C x1, settled. Haemodynamically stable. ANC 0.3 on repeat FBC.",
@@ -156,7 +156,7 @@
       "id": "n3",
       "patientId": "p1",
       "authorId": "s2",
-      "createdAt": "2026-07-06T08:45:00+08:00",
+      "createdAt": "2026-08-21T08:45:00+08:00",
       "isbar": {
         "identify": "Raymond Farquhar, 65M, MRN WMC-204771, bed 12A. Ward round — Dr Krishnamurthy, registrar.",
         "situation": "Day 4 febrile neutropenia. Afebrile for 36 hours. ANC recovering to 0.9 on this morning's FBC. Feeling better, eating improved.",
@@ -169,7 +169,7 @@
       "id": "n4",
       "patientId": "p2",
       "authorId": "s4",
-      "createdAt": "2026-06-29T16:00:00+08:00",
+      "createdAt": "2026-08-14T16:00:00+08:00",
       "isbar": {
         "identify": "Colleen Maher, 81F, MRN WMC-198342, bed 12B. Admitting note — Dr Petrov, RMO.",
         "situation": "Referred from respiratory clinic with new diagnosis extensive-stage SCLC and symptomatic hyponatraemia. Na 118 mmol/L on presentation. Confused and unsteady on feet.",
@@ -182,7 +182,7 @@
       "id": "n5",
       "patientId": "p2",
       "authorId": "s2",
-      "createdAt": "2026-07-01T09:00:00+08:00",
+      "createdAt": "2026-08-16T09:00:00+08:00",
       "isbar": {
         "identify": "Colleen Maher, 81F, MRN WMC-198342, bed 12B. Ward round — Dr Krishnamurthy, registrar.",
         "situation": "Day 3 admission. Na improving — 124 mmol/L today. Orientated to place, less confused. Ambulating with frame.",
@@ -195,7 +195,7 @@
       "id": "n6",
       "patientId": "p2",
       "authorId": "s2",
-      "createdAt": "2026-07-06T09:00:00+08:00",
+      "createdAt": "2026-08-21T09:00:00+08:00",
       "isbar": {
         "identify": "Colleen Maher, 81F, MRN WMC-198342, bed 12B. Ward round — Dr Krishnamurthy, registrar.",
         "situation": "Day 8. Na 129 mmol/L — stable improvement. Orientated, eating small amounts, managing fluid restriction well. No seizure or neurological deterioration.",
@@ -208,7 +208,7 @@
       "id": "n7",
       "patientId": "p3",
       "authorId": "s3",
-      "createdAt": "2026-06-28T12:00:00+08:00",
+      "createdAt": "2026-08-13T12:00:00+08:00",
       "isbar": {
         "identify": "Diane Salonius, 74F, MRN WMC-211056, bed 14A. Admitting note — Dr O'Brien, RMO.",
         "situation": "Admitted for symptom management. Known metastatic breast cancer (bone, liver, lung) — no longer for active cancer-directed therapy. Increasing pain and fatigue over 2 weeks.",
@@ -221,7 +221,7 @@
       "id": "n8",
       "patientId": "p3",
       "authorId": "s4",
-      "createdAt": "2026-07-02T08:30:00+08:00",
+      "createdAt": "2026-08-17T08:30:00+08:00",
       "isbar": {
         "identify": "Diane Salonius, 74F, MRN WMC-211056, bed 14A. Ward round — Dr Petrov, RMO.",
         "situation": "Day 5. Resting comfortably on SC oxycodone + midazolam PRN. Not distressed. Minimal oral intake — family present around the clock.",
@@ -234,7 +234,7 @@
       "id": "n9",
       "patientId": "p3",
       "authorId": "s2",
-      "createdAt": "2026-07-06T08:30:00+08:00",
+      "createdAt": "2026-08-21T08:30:00+08:00",
       "isbar": {
         "identify": "Diane Salonius, 74F, MRN WMC-211056, bed 14A. Ward round — Dr Krishnamurthy, registrar.",
         "situation": "Day 9. Unresponsive to voice, responds to pain only. Mottling to knees. Cheyne-Stokes breathing pattern. Family at bedside.",
@@ -247,7 +247,7 @@
       "id": "n10",
       "patientId": "p4",
       "authorId": "s3",
-      "createdAt": "2026-07-03T09:30:00+08:00",
+      "createdAt": "2026-08-18T09:30:00+08:00",
       "isbar": {
         "identify": "Thomas Ngata, 53M, MRN WMC-206893, bed 14B. Admitting/day 1 note — Dr O'Brien, RMO.",
         "situation": "Day 1 R-CHOP cycle 1 for newly diagnosed diffuse large B-cell lymphoma (DLBCL). Admitted for TLS monitoring given high tumour burden.",
@@ -260,7 +260,7 @@
       "id": "n11",
       "patientId": "p4",
       "authorId": "s2",
-      "createdAt": "2026-07-05T09:00:00+08:00",
+      "createdAt": "2026-08-20T09:00:00+08:00",
       "isbar": {
         "identify": "Thomas Ngata, 53M, MRN WMC-206893, bed 14B. Ward round day 3 — Dr Krishnamurthy, registrar.",
         "situation": "Day 3 post-R-CHOP. TLS biochemical — K 5.8, urate 0.71, phosphate 1.9. No ECG changes, no clinical TLS criteria met. Tolerating treatment well.",
@@ -273,7 +273,7 @@
       "id": "n12",
       "patientId": "p4",
       "authorId": "s4",
-      "createdAt": "2026-07-06T09:30:00+08:00",
+      "createdAt": "2026-08-21T09:30:00+08:00",
       "isbar": {
         "identify": "Thomas Ngata, 53M, MRN WMC-206893, bed 14B. Ward round day 4 — Dr Petrov, RMO.",
         "situation": "Day 4. This morning's UEC: K 5.4, urate 0.58 — improving trend. Phosphate 1.7. Creatinine stable at 98. Feeling fatigued but nausea settling.",
@@ -286,7 +286,7 @@
       "id": "n13",
       "patientId": "p5",
       "authorId": "s4",
-      "createdAt": "2026-07-01T18:00:00+08:00",
+      "createdAt": "2026-08-16T18:00:00+08:00",
       "isbar": {
         "identify": "Gerald Whitmore, 77M, MRN WMC-200415, bed 15A. Admitting note — Dr Petrov, RMO.",
         "situation": "Admitted with worsening bilateral lower limb weakness and back pain over 72 hours. Known metastatic prostate cancer with vertebral metastases.",
@@ -299,7 +299,7 @@
       "id": "n14",
       "patientId": "p5",
       "authorId": "s2",
-      "createdAt": "2026-07-03T09:00:00+08:00",
+      "createdAt": "2026-08-18T09:00:00+08:00",
       "isbar": {
         "identify": "Gerald Whitmore, 77M, MRN WMC-200415, bed 15A. Ward round day 3 — Dr Krishnamurthy, registrar.",
         "situation": "Day 3. MRI spine confirmed T8 epidural metastasis with cord compression — reported yesterday. Radiation oncology reviewed — palliative EBRT planned, 5 fractions starting tomorrow.",
@@ -312,7 +312,7 @@
       "id": "n15",
       "patientId": "p5",
       "authorId": "s2",
-      "createdAt": "2026-07-06T08:00:00+08:00",
+      "createdAt": "2026-08-21T08:00:00+08:00",
       "isbar": {
         "identify": "Gerald Whitmore, 77M, MRN WMC-200415, bed 15A. Ward round day 6 — Dr Krishnamurthy, registrar.",
         "situation": "Day 2 of EBRT (fraction 2/5 today). Lower limb strength stable — no further neurological decline. IDC draining well. Tolerating oral dexamethasone.",
@@ -325,7 +325,7 @@
       "id": "n16",
       "patientId": "p6",
       "authorId": "s3",
-      "createdAt": "2026-07-02T11:30:00+08:00",
+      "createdAt": "2026-08-17T11:30:00+08:00",
       "isbar": {
         "identify": "Margaret Lau, 67F, MRN WMC-215330, bed 15B. Admitting note — Dr O'Brien, RMO.",
         "situation": "Admitted for ERCP + biliary stenting for obstructive jaundice in context of pancreatic head adenocarcinoma. Procedure performed this morning under gastroenterology — plastic stent inserted.",
@@ -338,7 +338,7 @@
       "id": "n17",
       "patientId": "p6",
       "authorId": "s4",
-      "createdAt": "2026-07-04T09:00:00+08:00",
+      "createdAt": "2026-08-19T09:00:00+08:00",
       "isbar": {
         "identify": "Margaret Lau, 67F, MRN WMC-215330, bed 15B. Ward round day 3 — Dr Petrov, RMO.",
         "situation": "Day 3 post-ERCP. Bilirubin down to 134 µmol/L — good early response to stenting. Tolerating light diet. Jaundice visibly improving.",
@@ -351,7 +351,7 @@
       "id": "n18",
       "patientId": "p6",
       "authorId": "s2",
-      "createdAt": "2026-07-06T09:15:00+08:00",
+      "createdAt": "2026-08-21T09:15:00+08:00",
       "isbar": {
         "identify": "Margaret Lau, 67F, MRN WMC-215330, bed 15B. Ward round day 5 — Dr Krishnamurthy, registrar.",
         "situation": "Day 5. Bilirubin 88 µmol/L — continued improvement. Eating well, pain minimal, no fever. Jaundice clinically fading.",
@@ -366,210 +366,210 @@
       "id": "m1",
       "patientId": "p1",
       "authorId": "s6",
-      "createdAt": "2026-07-03T14:00:00+08:00",
+      "createdAt": "2026-08-18T14:00:00+08:00",
       "text": "Bed 12A — Farquhar. Blood cultures drawn x2 (PICC + peripheral). Meropenem first dose given 1330. Temp still 38.7."
     },
     {
       "id": "m2",
       "patientId": "p1",
       "authorId": "s3",
-      "createdAt": "2026-07-03T14:15:00+08:00",
+      "createdAt": "2026-08-18T14:15:00+08:00",
       "text": "Thanks @Marcus. Keep hourly obs going for now. Call me if temp hits 39.5 or HR >120."
     },
     {
       "id": "m3",
       "patientId": "p1",
       "authorId": "s5",
-      "createdAt": "2026-07-04T11:00:00+08:00",
+      "createdAt": "2026-08-19T11:00:00+08:00",
       "text": "12A cultures — still no growth at 24 h. Microbiology said they will call directly if anything flags. CRP result back: 187 mg/L."
     },
     {
       "id": "m4",
       "patientId": "p1",
       "authorId": "s2",
-      "createdAt": "2026-07-05T08:00:00+08:00",
+      "createdAt": "2026-08-20T08:00:00+08:00",
       "text": "Farquhar afebrile overnight. ANC this morning 0.6 — recovering. Will discuss GCSF prophylaxis next cycle with Dr Nwosu at rounds."
     },
     {
       "id": "m5",
       "patientId": "p1",
       "authorId": "s6",
-      "createdAt": "2026-07-06T07:30:00+08:00",
+      "createdAt": "2026-08-21T07:30:00+08:00",
       "text": "Morning bloods taken for bed 12A — FBC and CRP. Afebrile overnight, obs stable."
     },
     {
       "id": "m6",
       "patientId": "p1",
       "authorId": "s2",
-      "createdAt": "2026-07-06T10:00:00+08:00",
+      "createdAt": "2026-08-21T10:00:00+08:00",
       "text": "ANC 0.9 this morning. CRP 98. Plan to step down to oral antibiotics tomorrow if ANC >1. @Liam can you chase pharmacy re: oral switch options given penicillin allergy?"
     },
     {
       "id": "m7",
       "patientId": "p2",
       "authorId": "s4",
-      "createdAt": "2026-06-29T17:00:00+08:00",
+      "createdAt": "2026-08-14T17:00:00+08:00",
       "text": "12B — Maher admitted. Na 118. Fluid restriction 800 mL charted. Strict I&O, daily UEC order in. Daughter is next-of-kin, she has been informed."
     },
     {
       "id": "m8",
       "patientId": "p2",
       "authorId": "s2",
-      "createdAt": "2026-06-30T09:30:00+08:00",
+      "createdAt": "2026-08-15T09:30:00+08:00",
       "text": "Na up to 121 today — good direction. Keep restriction tight. @Marcus please reinforce 800 mL fluid allowance with patient and family."
     },
     {
       "id": "m9",
       "patientId": "p2",
       "authorId": "s6",
-      "createdAt": "2026-07-01T16:00:00+08:00",
+      "createdAt": "2026-08-16T16:00:00+08:00",
       "text": "Family asking about goals of care again. Daughter wants to speak with Dr Nwosu directly. She is here until 6 pm today."
     },
     {
       "id": "m10",
       "patientId": "p2",
       "authorId": "s2",
-      "createdAt": "2026-07-03T10:00:00+08:00",
+      "createdAt": "2026-08-18T10:00:00+08:00",
       "text": "Na 126 — trending well. Palliative care reviewed today. Dexamethasone 4 mg mane started. @Jess can you document the palliative care review in the EMR?"
     },
     {
       "id": "m11",
       "patientId": "p2",
       "authorId": "s5",
-      "createdAt": "2026-07-03T10:20:00+08:00",
+      "createdAt": "2026-08-18T10:20:00+08:00",
       "text": "Done — palliative care consult note added. Dr Fenton said he will review again Friday."
     },
     {
       "id": "m12",
       "patientId": "p3",
       "authorId": "s6",
-      "createdAt": "2026-06-28T14:00:00+08:00",
+      "createdAt": "2026-08-13T14:00:00+08:00",
       "text": "14A — Salonius. NFR in place, comfort cares commenced. Oxycodone SC charted. Family are settling in — 3 visitors at bedside now."
     },
     {
       "id": "m13",
       "patientId": "p3",
       "authorId": "s3",
-      "createdAt": "2026-06-30T08:00:00+08:00",
+      "createdAt": "2026-08-15T08:00:00+08:00",
       "text": "Syringe driver going well. Breakthrough used x2 overnight. Discussed with palliative care — they will review midday. No bloods needed."
     },
     {
       "id": "m14",
       "patientId": "p3",
       "authorId": "s2",
-      "createdAt": "2026-07-05T09:00:00+08:00",
+      "createdAt": "2026-08-20T09:00:00+08:00",
       "text": "14A. Unresponsive to voice this morning. Mottling to knees. Family counselled. Chaplain is booked for 2 pm. Hyoscine added to driver."
     },
     {
       "id": "m15",
       "patientId": "p3",
       "authorId": "s6",
-      "createdAt": "2026-07-06T06:00:00+08:00",
+      "createdAt": "2026-08-21T06:00:00+08:00",
       "text": "Salonius — very unsettled around 0300. PRN midazolam given x1 with good effect. Now resting. Family overnight."
     },
     {
       "id": "m16",
       "patientId": "p4",
       "authorId": "s3",
-      "createdAt": "2026-07-03T13:00:00+08:00",
+      "createdAt": "2026-08-18T13:00:00+08:00",
       "text": "14B Ngata — R-CHOP commenced 1100. Running well. TLS bloods ordered at 6 h and 12 h. Hydration 3 L/day running."
     },
     {
       "id": "m17",
       "patientId": "p4",
       "authorId": "s3",
-      "createdAt": "2026-07-03T21:00:00+08:00",
+      "createdAt": "2026-08-18T21:00:00+08:00",
       "text": "6-hour TLS bloods: K 5.2, urate 0.58, phosphate 1.7. No ECG changes. Will recheck at midnight."
     },
     {
       "id": "m18",
       "patientId": "p4",
       "authorId": "s2",
-      "createdAt": "2026-07-04T09:30:00+08:00",
+      "createdAt": "2026-08-19T09:30:00+08:00",
       "text": "12-hour results: K up to 5.8, urate 0.71, phosphate 1.9. Biochemical TLS. Rasburicase ordered — check G6PD result first. @Liam can you confirm G6PD was sent?"
     },
     {
       "id": "m19",
       "patientId": "p4",
       "authorId": "s3",
-      "createdAt": "2026-07-04T09:45:00+08:00",
+      "createdAt": "2026-08-19T09:45:00+08:00",
       "text": "G6PD normal — sent yesterday. Rasburicase safe to give. Pharmacy notified."
     },
     {
       "id": "m20",
       "patientId": "p4",
       "authorId": "s6",
-      "createdAt": "2026-07-05T08:00:00+08:00",
+      "createdAt": "2026-08-20T08:00:00+08:00",
       "text": "Morning TLS bloods done for Ngata. Awaiting result. He slept well, no arrhythmia on telemetry overnight."
     },
     {
       "id": "m21",
       "patientId": "p5",
       "authorId": "s4",
-      "createdAt": "2026-07-01T18:30:00+08:00",
+      "createdAt": "2026-08-16T18:30:00+08:00",
       "text": "15A — Whitmore admitted. Cord compression suspected. MRI spine requested as urgent. Dexamethasone 8 mg IV given. Neurosurgery on-call aware."
     },
     {
       "id": "m22",
       "patientId": "p5",
       "authorId": "s4",
-      "createdAt": "2026-07-01T20:00:00+08:00",
+      "createdAt": "2026-08-16T20:00:00+08:00",
       "text": "Radiology called — MRI can go tonight at 2200. @Marcus please ensure patient is prepped and IDC in situ prior. Power 3/5 both legs — stable."
     },
     {
       "id": "m23",
       "patientId": "p5",
       "authorId": "s2",
-      "createdAt": "2026-07-02T09:00:00+08:00",
+      "createdAt": "2026-08-17T09:00:00+08:00",
       "text": "MRI confirmed T8 epidural met with cord compression. Rad onc reviewed — EBRT 5 fractions starting 4 July. Dexamethasone BD continuing."
     },
     {
       "id": "m24",
       "patientId": "p5",
       "authorId": "s5",
-      "createdAt": "2026-07-04T11:00:00+08:00",
+      "createdAt": "2026-08-19T11:00:00+08:00",
       "text": "EBRT fraction 1 done this morning — patient tolerated well. BSL 15.4 post-dex. Endocrine team called for insulin advice."
     },
     {
       "id": "m25",
       "patientId": "p5",
       "authorId": "s6",
-      "createdAt": "2026-07-06T07:00:00+08:00",
+      "createdAt": "2026-08-21T07:00:00+08:00",
       "text": "BSL 14.8 pre-breakfast. Sliding scale running. EBRT fraction 2 transport booked for 1000. Son is visiting today."
     },
     {
       "id": "m26",
       "patientId": "p6",
       "authorId": "s3",
-      "createdAt": "2026-07-02T13:00:00+08:00",
+      "createdAt": "2026-08-17T13:00:00+08:00",
       "text": "15B — Lau post-ERCP. Tolerating clear fluids. No pain. Lipase 6-hour result: 320. Will repeat at 24 h. IV fluids running."
     },
     {
       "id": "m27",
       "patientId": "p6",
       "authorId": "s4",
-      "createdAt": "2026-07-03T09:00:00+08:00",
+      "createdAt": "2026-08-18T09:00:00+08:00",
       "text": "Lipase 24 h: 180. No pancreatitis clinically. Bili 158 today — stent working. Advancing to light diet."
     },
     {
       "id": "m28",
       "patientId": "p6",
       "authorId": "s5",
-      "createdAt": "2026-07-04T14:00:00+08:00",
+      "createdAt": "2026-08-19T14:00:00+08:00",
       "text": "Bilirubin 134, ALP 320 on today's LFTs — improving. @Priya should we book outpatient LFTs for discharge follow-up?"
     },
     {
       "id": "m29",
       "patientId": "p6",
       "authorId": "s2",
-      "createdAt": "2026-07-04T14:20:00+08:00",
+      "createdAt": "2026-08-19T14:20:00+08:00",
       "text": "Yes @Jess — book outpatient LFTs 3 days post-discharge and CC to oncology. Oncology clinic 14 July already organised."
     },
     {
       "id": "m30",
       "patientId": "p6",
       "authorId": "s6",
-      "createdAt": "2026-07-06T08:00:00+08:00",
+      "createdAt": "2026-08-21T08:00:00+08:00",
       "text": "Lau feeling much better this morning. Ate breakfast. Jaundice fading. Family keen to take her home tomorrow."
     }
   ],
@@ -580,8 +580,8 @@
       "kind": "pathology",
       "source": "Clinipath",
       "panelName": "FBC",
-      "collectedAt": "2026-07-03T09:00:00+08:00",
-      "reportedAt": "2026-07-03T11:30:00+08:00",
+      "collectedAt": "2026-08-18T09:00:00+08:00",
+      "reportedAt": "2026-08-18T11:30:00+08:00",
       "analytes": [
         {
           "name": "Haemoglobin",
@@ -626,8 +626,8 @@
       "kind": "pathology",
       "source": "Clinipath",
       "panelName": "CRP",
-      "collectedAt": "2026-07-04T07:30:00+08:00",
-      "reportedAt": "2026-07-04T09:00:00+08:00",
+      "collectedAt": "2026-08-19T07:30:00+08:00",
+      "reportedAt": "2026-08-19T09:00:00+08:00",
       "analytes": [
         {
           "name": "C-Reactive Protein",
@@ -644,8 +644,8 @@
       "kind": "pathology",
       "source": "Clinipath",
       "panelName": "FBC",
-      "collectedAt": "2026-07-06T07:00:00+08:00",
-      "reportedAt": "2026-07-06T09:00:00+08:00",
+      "collectedAt": "2026-08-21T07:00:00+08:00",
+      "reportedAt": "2026-08-21T09:00:00+08:00",
       "analytes": [
         {
           "name": "Haemoglobin",
@@ -683,8 +683,8 @@
       "kind": "pathology",
       "source": "Clinipath",
       "panelName": "CRP",
-      "collectedAt": "2026-07-06T07:00:00+08:00",
-      "reportedAt": "2026-07-06T09:10:00+08:00",
+      "collectedAt": "2026-08-21T07:00:00+08:00",
+      "reportedAt": "2026-08-21T09:10:00+08:00",
       "analytes": [
         {
           "name": "C-Reactive Protein",
@@ -702,8 +702,8 @@
       "source": "Perth Radiological Clinic",
       "modality": "XR",
       "studyName": "Chest X-ray PA",
-      "performedAt": "2026-07-03T10:00:00+08:00",
-      "reportedAt": "2026-07-03T12:00:00+08:00",
+      "performedAt": "2026-08-18T10:00:00+08:00",
+      "reportedAt": "2026-08-18T12:00:00+08:00",
       "reportText": "The lungs are clear with no focal consolidation or pleural effusion. The cardiac silhouette is normal in size. Mediastinal contour is unremarkable. A PICC line is visualised with tip projecting over the distal SVC — satisfactory position. No pneumothorax identified. Osseous structures appear intact.",
       "impression": "No acute consolidation or pleural effusion. PICC line in satisfactory position.",
       "abnormal": false
@@ -714,8 +714,8 @@
       "kind": "pathology",
       "source": "Clinipath",
       "panelName": "UEC",
-      "collectedAt": "2026-06-29T15:00:00+08:00",
-      "reportedAt": "2026-06-29T17:00:00+08:00",
+      "collectedAt": "2026-08-14T15:00:00+08:00",
+      "reportedAt": "2026-08-14T17:00:00+08:00",
       "analytes": [
         {
           "name": "Sodium",
@@ -774,8 +774,8 @@
       "kind": "pathology",
       "source": "Clinipath",
       "panelName": "UEC",
-      "collectedAt": "2026-07-06T07:30:00+08:00",
-      "reportedAt": "2026-07-06T09:30:00+08:00",
+      "collectedAt": "2026-08-21T07:30:00+08:00",
+      "reportedAt": "2026-08-21T09:30:00+08:00",
       "analytes": [
         {
           "name": "Sodium",
@@ -828,8 +828,8 @@
       "source": "Perth Radiological Clinic",
       "modality": "CT",
       "studyName": "CT Chest/Abdomen/Pelvis with contrast",
-      "performedAt": "2026-06-25T10:00:00+08:00",
-      "reportedAt": "2026-06-25T14:00:00+08:00",
+      "performedAt": "2026-08-10T10:00:00+08:00",
+      "reportedAt": "2026-08-10T14:00:00+08:00",
       "reportText": "There is a large right hilar mass measuring 6.8 × 4.2 cm with associated right paratracheal and subcarinal lymphadenopathy. The right upper lobe demonstrates postobstructive atelectasis. Multiple bilateral mediastinal nodes are enlarged, the largest measuring 2.1 cm in short axis. No pleural effusion or pericardial effusion identified. The liver, spleen, and adrenal glands are unremarkable. No intraabdominal lymphadenopathy.",
       "impression": "Large right hilar mass with extensive mediastinal lymphadenopathy consistent with extensive-stage SCLC. No evidence of hepatic or adrenal metastases on this study.",
       "abnormal": true
@@ -840,8 +840,8 @@
       "kind": "pathology",
       "source": "Clinipath",
       "panelName": "LFT",
-      "collectedAt": "2026-06-28T11:00:00+08:00",
-      "reportedAt": "2026-06-28T13:30:00+08:00",
+      "collectedAt": "2026-08-13T11:00:00+08:00",
+      "reportedAt": "2026-08-13T13:30:00+08:00",
       "analytes": [
         {
           "name": "Total Bilirubin",
@@ -894,8 +894,8 @@
       "source": "SKG Radiology",
       "modality": "CT",
       "studyName": "CT Chest/Abdomen/Pelvis with contrast",
-      "performedAt": "2026-06-15T09:00:00+08:00",
-      "reportedAt": "2026-06-15T12:00:00+08:00",
+      "performedAt": "2026-07-31T09:00:00+08:00",
+      "reportedAt": "2026-07-31T12:00:00+08:00",
       "reportText": "There are innumerable hepatic metastases throughout both lobes of the liver, the largest measuring 4.1 cm in segment 7. Bilateral pulmonary nodules are present with the largest 1.8 cm in the right lower lobe. Extensive lytic osseous metastases are identified in the thoracic and lumbar spine, bilateral ribs, and pelvis. A small-to-moderate right pleural effusion is noted. No bowel obstruction. Small amount of ascites is present in the pelvis.",
       "impression": "Widespread metastatic disease with hepatic, pulmonary, osseous metastases and pelvic ascites. Overall disease burden is markedly increased compared to prior imaging.",
       "abnormal": true
@@ -906,8 +906,8 @@
       "kind": "pathology",
       "source": "Clinipath",
       "panelName": "UEC",
-      "collectedAt": "2026-07-04T06:00:00+08:00",
-      "reportedAt": "2026-07-04T08:30:00+08:00",
+      "collectedAt": "2026-08-19T06:00:00+08:00",
+      "reportedAt": "2026-08-19T08:30:00+08:00",
       "analytes": [
         {
           "name": "Sodium",
@@ -966,8 +966,8 @@
       "kind": "pathology",
       "source": "Clinipath",
       "panelName": "UEC",
-      "collectedAt": "2026-07-06T06:30:00+08:00",
-      "reportedAt": "2026-07-06T08:30:00+08:00",
+      "collectedAt": "2026-08-21T06:30:00+08:00",
+      "reportedAt": "2026-08-21T08:30:00+08:00",
       "analytes": [
         {
           "name": "Sodium",
@@ -1027,8 +1027,8 @@
       "source": "SKG Radiology",
       "modality": "PET",
       "studyName": "FDG PET-CT whole body",
-      "performedAt": "2026-06-25T08:00:00+08:00",
-      "reportedAt": "2026-06-25T15:00:00+08:00",
+      "performedAt": "2026-08-10T08:00:00+08:00",
+      "reportedAt": "2026-08-10T15:00:00+08:00",
       "reportText": "There is FDG-avid bulky lymphadenopathy in the bilateral cervical, mediastinal, and retroperitoneal regions. The dominant cervical nodal mass measures 5.8 × 3.9 cm with an SUVmax of 18.4. No FDG-avid bone marrow involvement or extranodal disease. The liver and spleen demonstrate mild diffuse FDG uptake consistent with reactive change. No FDG-avid lung nodules.",
       "impression": "Extensive FDG-avid nodal disease in the cervical, mediastinal, and retroperitoneal regions consistent with stage IIIA bulky DLBCL. No bone marrow or extranodal involvement identified.",
       "abnormal": true
@@ -1039,8 +1039,8 @@
       "kind": "pathology",
       "source": "Clinipath",
       "panelName": "Tumour markers",
-      "collectedAt": "2026-07-01T17:00:00+08:00",
-      "reportedAt": "2026-07-02T09:00:00+08:00",
+      "collectedAt": "2026-08-16T17:00:00+08:00",
+      "reportedAt": "2026-08-17T09:00:00+08:00",
       "analytes": [
         {
           "name": "PSA",
@@ -1058,8 +1058,8 @@
       "source": "SKG Radiology",
       "modality": "MRI",
       "studyName": "MRI Spine — whole spine with and without contrast",
-      "performedAt": "2026-07-01T22:00:00+08:00",
-      "reportedAt": "2026-07-02T07:30:00+08:00",
+      "performedAt": "2026-08-16T22:00:00+08:00",
+      "reportedAt": "2026-08-17T07:30:00+08:00",
       "reportText": "There is an enhancing epidural soft tissue mass at the T8 level causing significant anterior and lateral cord compression. The spinal cord demonstrates T2 signal hyperintensity at the level of compression consistent with myelopathic change. Multiple vertebral body metastases are noted throughout the thoracic and lumbar spine with pathological compression fractures at T8 and L2. The conus medullaris is at the level of L1 and appears compressed. Post-contrast enhancement of multiple vertebral lesions is consistent with active metastatic disease.",
       "impression": "T8 epidural metastasis with significant spinal cord compression and associated myelopathic change. Multiple thoracolumbar vertebral metastases with pathological fractures at T8 and L2.",
       "abnormal": true
@@ -1070,8 +1070,8 @@
       "kind": "pathology",
       "source": "Clinipath",
       "panelName": "UEC",
-      "collectedAt": "2026-07-06T07:00:00+08:00",
-      "reportedAt": "2026-07-06T09:00:00+08:00",
+      "collectedAt": "2026-08-21T07:00:00+08:00",
+      "reportedAt": "2026-08-21T09:00:00+08:00",
       "analytes": [
         {
           "name": "Sodium",
@@ -1116,8 +1116,8 @@
       "kind": "pathology",
       "source": "Clinipath",
       "panelName": "LFT",
-      "collectedAt": "2026-07-02T08:30:00+08:00",
-      "reportedAt": "2026-07-02T11:00:00+08:00",
+      "collectedAt": "2026-08-17T08:30:00+08:00",
+      "reportedAt": "2026-08-17T11:00:00+08:00",
       "analytes": [
         {
           "name": "Total Bilirubin",
@@ -1176,8 +1176,8 @@
       "kind": "pathology",
       "source": "Clinipath",
       "panelName": "LFT",
-      "collectedAt": "2026-07-06T07:30:00+08:00",
-      "reportedAt": "2026-07-06T09:30:00+08:00",
+      "collectedAt": "2026-08-21T07:30:00+08:00",
+      "reportedAt": "2026-08-21T09:30:00+08:00",
       "analytes": [
         {
           "name": "Total Bilirubin",
@@ -1237,8 +1237,8 @@
       "source": "SKG Radiology",
       "modality": "CT",
       "studyName": "CT Abdomen/Pelvis with contrast",
-      "performedAt": "2026-06-18T10:00:00+08:00",
-      "reportedAt": "2026-06-18T13:00:00+08:00",
+      "performedAt": "2026-08-03T10:00:00+08:00",
+      "reportedAt": "2026-08-03T13:00:00+08:00",
       "reportText": "There is a 3.2 × 2.8 cm mass in the head of the pancreas causing abrupt cutoff of the common bile duct with upstream biliary dilatation. The common bile duct measures 14 mm in diameter. The pancreatic duct is dilated at 5 mm — a double duct sign. There are multiple small hypodense hepatic lesions in both lobes, the largest measuring 1.4 cm, consistent with metastatic disease. No vascular encasement of the coeliac axis or SMA on arterial phase imaging. No ascites.",
       "impression": "Pancreatic head mass causing biliary obstruction with double duct sign and hepatic metastases. Features consistent with metastatic pancreatic adenocarcinoma. Not resectable.",
       "abnormal": true
@@ -1250,8 +1250,8 @@
       "source": "SKG Radiology",
       "modality": "US",
       "studyName": "Ultrasound Abdomen post-ERCP",
-      "performedAt": "2026-07-03T14:00:00+08:00",
-      "reportedAt": "2026-07-03T16:00:00+08:00",
+      "performedAt": "2026-08-18T14:00:00+08:00",
+      "reportedAt": "2026-08-18T16:00:00+08:00",
       "reportText": "The common bile duct measures 10 mm in diameter — improved from 14 mm on prior CT. A biliary stent is visualised in situ within the common bile duct with satisfactory positioning. The gallbladder is distended but without wall thickening or gallstones. The pancreatic head mass is again noted. No free fluid identified in the peritoneum. The liver demonstrates multiple hypoechoic foci consistent with known metastatic disease.",
       "impression": "Biliary stent in satisfactory position with early improvement in CBD calibre post-ERCP. Known pancreatic head mass and hepatic metastases demonstrated.",
       "abnormal": true
@@ -1262,7 +1262,7 @@
       "id": "t1",
       "patientId": "p1",
       "authorId": "s3",
-      "createdAt": "2026-07-03T11:00:00+08:00",
+      "createdAt": "2026-08-18T11:00:00+08:00",
       "assigneeId": "s6",
       "text": "Book non-emergency patient transport for the return trip home — confirm the pickup window with the transport desk.",
       "status": "open"
@@ -1271,7 +1271,7 @@
       "id": "t2",
       "patientId": "p2",
       "authorId": "s2",
-      "createdAt": "2026-07-01T09:30:00+08:00",
+      "createdAt": "2026-08-16T09:30:00+08:00",
       "assigneeId": "s6",
       "text": "Schedule a family meeting with the patient's daughter — she's free after 2pm weekdays, check conference room availability with the ward clerk.",
       "status": "open"
@@ -1280,7 +1280,7 @@
       "id": "t3",
       "patientId": "p3",
       "authorId": "s4",
-      "createdAt": "2026-06-29T09:00:00+08:00",
+      "createdAt": "2026-08-14T09:00:00+08:00",
       "text": "Chase pharmacy for the discharge medication packing list — form hasn't come back from dispensary yet.",
       "status": "open"
     },
@@ -1288,7 +1288,7 @@
       "id": "t4",
       "patientId": "p4",
       "authorId": "s2",
-      "createdAt": "2026-07-04T10:00:00+08:00",
+      "createdAt": "2026-08-19T10:00:00+08:00",
       "assigneeId": "s5",
       "text": "Log a job with the equipment desk for a replacement infusion pump — current unit flagged for servicing.",
       "status": "open"
@@ -1297,7 +1297,7 @@
       "id": "t5",
       "patientId": "p5",
       "authorId": "s6",
-      "createdAt": "2026-07-02T08:00:00+08:00",
+      "createdAt": "2026-08-17T08:00:00+08:00",
       "assigneeId": "s3",
       "text": "Confirm the daily transport roster with the transport desk for the patient's off-ward appointments this week.",
       "status": "open"
@@ -1306,18 +1306,18 @@
       "id": "t6",
       "patientId": "p6",
       "authorId": "s5",
-      "createdAt": "2026-07-04T15:00:00+08:00",
+      "createdAt": "2026-08-19T15:00:00+08:00",
       "assigneeId": "s2",
       "text": "Book the outpatient follow-up clinic slot and confirm the date with the patient.",
       "status": "done",
-      "completedAt": "2026-07-04T16:30:00+08:00",
+      "completedAt": "2026-08-19T16:30:00+08:00",
       "completedById": "s2"
     },
     {
       "id": "t7",
       "patientId": "p1",
       "authorId": "s2",
-      "createdAt": "2026-07-05T09:30:00+08:00",
+      "createdAt": "2026-08-20T09:30:00+08:00",
       "text": "Chase medical records for a copy of the admission paperwork — ward clerk says the original is missing from the chart.",
       "status": "open"
     },
@@ -1325,29 +1325,29 @@
       "id": "t8",
       "patientId": "p2",
       "authorId": "s6",
-      "createdAt": "2026-06-30T10:00:00+08:00",
+      "createdAt": "2026-08-15T10:00:00+08:00",
       "assigneeId": "s5",
       "text": "Send through the social work referral paperwork for discharge planning and confirm it's been logged.",
       "status": "done",
-      "completedAt": "2026-07-01T09:15:00+08:00",
+      "completedAt": "2026-08-16T09:15:00+08:00",
       "completedById": "s5"
     },
     {
       "id": "t9",
       "patientId": "p3",
       "authorId": "s3",
-      "createdAt": "2026-06-28T13:00:00+08:00",
+      "createdAt": "2026-08-13T13:00:00+08:00",
       "assigneeId": "s6",
       "text": "Confirm the chaplaincy visit time with pastoral care admin and let the family know.",
       "status": "done",
-      "completedAt": "2026-06-28T14:30:00+08:00",
+      "completedAt": "2026-08-13T14:30:00+08:00",
       "completedById": "s6"
     },
     {
       "id": "t10",
       "patientId": "p5",
       "authorId": "s1",
-      "createdAt": "2026-07-01T17:30:00+08:00",
+      "createdAt": "2026-08-16T17:30:00+08:00",
       "text": "Get the specialist referral letter drafted and sent — needs to go out today.",
       "status": "open"
     }
