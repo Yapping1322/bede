@@ -1,0 +1,238 @@
+{
+  "clinicPatients": [
+    {
+      "id": "cp1",
+      "name": "Mai Nguyen",
+      "dob": "1992-03-14",
+      "sex": "F",
+      "isNewPatient": false,
+      "householdId": "hh-nguyen"
+    },
+    {
+      "id": "cp2",
+      "name": "Bao Nguyen",
+      "dob": "2019-06-02",
+      "sex": "M",
+      "isNewPatient": false,
+      "householdId": "hh-nguyen"
+    },
+    {
+      "id": "cp3",
+      "name": "Linh Nguyen",
+      "dob": "2021-01-20",
+      "sex": "F",
+      "isNewPatient": false,
+      "householdId": "hh-nguyen"
+    },
+    {
+      "id": "cp4",
+      "name": "Grace Okafor",
+      "dob": "1958-09-11",
+      "sex": "F",
+      "isNewPatient": false,
+      "interpreterLanguage": "Igbo"
+    },
+    {
+      "id": "cp5",
+      "name": "Tom Halloran",
+      "dob": "1971-11-05",
+      "sex": "M",
+      "isNewPatient": false
+    },
+    {
+      "id": "cp6",
+      "name": "Priya Raman",
+      "dob": "1996-08-22",
+      "sex": "F",
+      "isNewPatient": true
+    },
+    {
+      "id": "cp7",
+      "name": "Derek Falzon",
+      "dob": "1984-02-17",
+      "sex": "M",
+      "isNewPatient": false
+    },
+    {
+      "id": "cp8",
+      "name": "Ashley Boyd",
+      "dob": "2001-05-30",
+      "sex": "F",
+      "isNewPatient": false
+    },
+    {
+      "id": "cp9",
+      "name": "Nathan Reid",
+      "dob": "1978-07-19",
+      "sex": "M",
+      "isNewPatient": false
+    },
+    {
+      "id": "cp10",
+      "name": "Fatima Sayed",
+      "dob": "1989-12-03",
+      "sex": "F",
+      "isNewPatient": false
+    }
+  ],
+
+  "policies": [
+    {
+      "clinicianId": "s1",
+      "maxParticipantsPerAppointment": 4,
+      "concurrentPolicy": "ask",
+      "maxConcurrent": 2,
+      "autoAcceptFor": ["family-add"]
+    },
+    {
+      "clinicianId": "s2",
+      "maxParticipantsPerAppointment": 3,
+      "concurrentPolicy": "never",
+      "maxConcurrent": 1,
+      "autoAcceptFor": []
+    }
+  ],
+
+  "pastAppointments": [
+    { "clinicPatientId": "cp5", "clinicianId": "s1", "daysAgo": 210, "actualMinutes": 34, "reasonTags": ["mental-health-plan"] },
+    { "clinicPatientId": "cp5", "clinicianId": "s1", "daysAgo": 168, "actualMinutes": 38, "reasonTags": ["mental-health-plan"] },
+    { "clinicPatientId": "cp5", "clinicianId": "s1", "daysAgo": 126, "actualMinutes": 31, "reasonTags": ["multiple-issues"] },
+    { "clinicPatientId": "cp5", "clinicianId": "s1", "daysAgo": 84, "actualMinutes": 42, "reasonTags": ["care-plan"] },
+    { "clinicPatientId": "cp5", "clinicianId": "s1", "daysAgo": 49, "actualMinutes": 36, "reasonTags": ["multiple-issues"] },
+    { "clinicPatientId": "cp5", "clinicianId": "s1", "daysAgo": 21, "actualMinutes": 33, "reasonTags": ["results-review"] },
+
+    { "clinicPatientId": "cp7", "clinicianId": "s1", "daysAgo": 160, "actualMinutes": 7, "reasonTags": ["script-only"] },
+    { "clinicPatientId": "cp7", "clinicianId": "s1", "daysAgo": 128, "actualMinutes": 6, "reasonTags": ["script-only"] },
+    { "clinicPatientId": "cp7", "clinicianId": "s1", "daysAgo": 96, "actualMinutes": 8, "reasonTags": ["script-only"] },
+    { "clinicPatientId": "cp7", "clinicianId": "s2", "daysAgo": 63, "actualMinutes": 7, "reasonTags": ["script-only"] },
+    { "clinicPatientId": "cp7", "clinicianId": "s1", "daysAgo": 30, "actualMinutes": 9, "reasonTags": ["script-only"] },
+
+    { "clinicPatientId": "cp4", "clinicianId": "s1", "daysAgo": 190, "actualMinutes": 26, "reasonTags": ["multiple-issues"] },
+    { "clinicPatientId": "cp4", "clinicianId": "s1", "daysAgo": 140, "actualMinutes": 31, "reasonTags": ["care-plan"] },
+    { "clinicPatientId": "cp4", "clinicianId": "s1", "daysAgo": 77, "actualMinutes": 28, "reasonTags": ["results-review"] },
+    { "clinicPatientId": "cp4", "clinicianId": "s1", "daysAgo": 35, "actualMinutes": 24, "reasonTags": ["multiple-issues"] },
+
+    { "clinicPatientId": "cp1", "clinicianId": "s1", "daysAgo": 220, "actualMinutes": 14, "reasonTags": [] },
+    { "clinicPatientId": "cp1", "clinicianId": "s1", "daysAgo": 112, "actualMinutes": 18, "reasonTags": ["multiple-issues"] },
+    { "clinicPatientId": "cp1", "clinicianId": "s2", "daysAgo": 44, "actualMinutes": 15, "reasonTags": [] },
+
+    { "clinicPatientId": "cp2", "clinicianId": "s1", "daysAgo": 150, "actualMinutes": 11, "reasonTags": ["immunisation"] },
+    { "clinicPatientId": "cp2", "clinicianId": "s1", "daysAgo": 58, "actualMinutes": 13, "reasonTags": [] },
+
+    { "clinicPatientId": "cp3", "clinicianId": "s1", "daysAgo": 58, "actualMinutes": 10, "reasonTags": ["immunisation"] },
+
+    { "clinicPatientId": "cp8", "clinicianId": "s2", "daysAgo": 175, "actualMinutes": 16, "reasonTags": [] },
+    { "clinicPatientId": "cp8", "clinicianId": "s2", "daysAgo": 67, "actualMinutes": 19, "reasonTags": ["multiple-issues"] },
+
+    { "clinicPatientId": "cp1", "clinicianId": "s1", "daysAgo": 175, "actualMinutes": 15, "reasonTags": [] },
+    { "clinicPatientId": "cp1", "clinicianId": "s1", "daysAgo": 88, "actualMinutes": 16, "reasonTags": [] },
+    { "clinicPatientId": "cp2", "clinicianId": "s1", "daysAgo": 200, "actualMinutes": 12, "reasonTags": [] },
+    { "clinicPatientId": "cp2", "clinicianId": "s1", "daysAgo": 100, "actualMinutes": 14, "reasonTags": ["immunisation"] },
+
+    { "clinicPatientId": "cp9", "clinicianId": "s1", "daysAgo": 205, "actualMinutes": 17, "reasonTags": [] },
+    { "clinicPatientId": "cp9", "clinicianId": "s1", "daysAgo": 145, "actualMinutes": 15, "reasonTags": [] },
+    { "clinicPatientId": "cp9", "clinicianId": "s1", "daysAgo": 90, "actualMinutes": 16, "reasonTags": ["results-review"] },
+    { "clinicPatientId": "cp9", "clinicianId": "s1", "daysAgo": 40, "actualMinutes": 18, "reasonTags": ["multiple-issues"] },
+
+    { "clinicPatientId": "cp10", "clinicianId": "s1", "daysAgo": 180, "actualMinutes": 13, "reasonTags": [] },
+    { "clinicPatientId": "cp10", "clinicianId": "s1", "daysAgo": 110, "actualMinutes": 12, "reasonTags": [] },
+    { "clinicPatientId": "cp10", "clinicianId": "s1", "daysAgo": 52, "actualMinutes": 14, "reasonTags": [] }
+  ],
+
+  "today": [
+    {
+      "id": "ap1",
+      "clinicianId": "s1",
+      "startMinuteOfDay": 540,
+      "status": "confirmed",
+      "urgent": false,
+      "participants": [
+        {
+          "clinicPatientId": "cp1",
+          "reasonText": "Sore throat, and I want to ask about my iron results",
+          "reasonTags": ["multiple-issues", "results-review"]
+        },
+        {
+          "clinicPatientId": "cp2",
+          "reasonText": "Same sore throat, he's been off school two days",
+          "reasonTags": []
+        },
+        {
+          "clinicPatientId": "cp3",
+          "reasonText": "Might as well check her too while we're in",
+          "reasonTags": []
+        }
+      ]
+    },
+    {
+      "id": "ap2",
+      "clinicianId": "s1",
+      "startMinuteOfDay": 585,
+      "status": "confirmed",
+      "urgent": false,
+      "participants": [
+        {
+          "clinicPatientId": "cp5",
+          "reasonText": "Mental health plan review, sleep is still bad",
+          "reasonTags": ["mental-health-plan"]
+        }
+      ]
+    },
+    {
+      "id": "ap3",
+      "clinicianId": "s1",
+      "startMinuteOfDay": 640,
+      "status": "confirmed",
+      "urgent": false,
+      "participants": [
+        {
+          "clinicPatientId": "cp7",
+          "reasonText": "Repeat script for the blood pressure tablets",
+          "reasonTags": ["script-only"]
+        }
+      ]
+    },
+    {
+      "id": "ap4",
+      "clinicianId": "s1",
+      "startMinuteOfDay": 660,
+      "status": "confirmed",
+      "urgent": false,
+      "participants": [
+        {
+          "clinicPatientId": "cp4",
+          "reasonText": "Knee is worse, and the pharmacy changed one of my tablets",
+          "reasonTags": ["multiple-issues", "care-plan"]
+        }
+      ]
+    },
+    {
+      "id": "ap5",
+      "clinicianId": "s1",
+      "startMinuteOfDay": 730,
+      "status": "requested",
+      "urgent": false,
+      "participants": [
+        {
+          "clinicPatientId": "cp6",
+          "reasonText": "New to the practice, need to get set up and discuss contraception",
+          "reasonTags": ["new-patient"]
+        }
+      ]
+    },
+    {
+      "id": "ap6",
+      "clinicianId": "s2",
+      "startMinuteOfDay": 570,
+      "status": "confirmed",
+      "urgent": false,
+      "participants": [
+        {
+          "clinicPatientId": "cp8",
+          "reasonText": "Follow up on the ankle and a referral question",
+          "reasonTags": ["multiple-issues"]
+        }
+      ]
+    }
+  ]
+}

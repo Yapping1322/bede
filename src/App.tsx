@@ -10,7 +10,9 @@ import NotesTab from './components/NotesTab'
 import MessagesTab from './components/MessagesTab'
 import ResultsTab from './components/ResultsTab'
 import TasksTab from './components/TasksTab'
+import VoiceTab from './components/VoiceTab'
 import TasksPage from './components/TasksPage'
+import ClinicDay from './components/ClinicDay'
 import HandoverPage from './components/HandoverPage'
 import SettingsPage from './components/SettingsPage'
 import Landing from './components/Landing'
@@ -45,11 +47,15 @@ const router = createBrowserRouter([
               { path: 'messages', element: <MessagesTab /> },
               { path: 'results', element: <ResultsTab /> },
               { path: 'tasks', element: <TasksTab /> },
+              // Dev only, deliberately: voice capture must not reach the public
+              // demo deployment. See the header of VoiceTab.tsx.
+              ...(import.meta.env.DEV ? [{ path: 'voice', element: <VoiceTab /> }] : []),
             ],
           },
         ],
       },
       { path: 'tasks', element: <TasksPage /> },
+      { path: 'clinic', element: <ClinicDay /> },
       { path: 'handover', element: <HandoverPage /> },
       { path: 'settings', element: <SettingsPage /> },
       { path: '*', element: <Navigate to="/" replace /> },

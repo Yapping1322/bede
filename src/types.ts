@@ -162,6 +162,58 @@ export interface ReportSummary {
   engine: string
 }
 
+/** Which structured field a spoken sentence is PROPOSED for.
+ *
+ * Note the step this takes beyond `LineKind`. That bucketing is grammatical —
+ * it reads the shape of a sentence, never its meaning. This one is clinical: to
+ * say a sentence belongs under `allergy` is to read what it is about. That is a
+ * genuine move toward interpretation, and the thing holding it on the
+ * restate-only side of REGULATORY_AU.md §1 is `ProposalStatus` — the engine
+ * only ever proposes, and nothing reaches the record that a clinician has not
+ * accepted. Remove the human gate and this becomes a device. */
+export type ProposedField = 'medication' | 'allergy' | 'result'
+
+/** `proposed` is the only status the engine can produce. The other two are
+ * reachable exclusively by explicit human action. */
+export type ProposalStatus = 'proposed' | 'accepted' | 'rejected'
+
+/** One word as the recogniser timed it, so a character span can be turned back
+ * into an audio offset and replayed. */
+export interface TranscriptWord {
+  text: string
+  /** Seconds into the recording. */
+  start: number
+  end: number
+  /** [start, end) offsets into the transcript text. */
+  span: [number, number]
+}
+
+/** A verbatim sentence lifted out of a round or consult transcript. `text` is
+ * always a literal slice of the transcript — never paraphrased, never
+ * generated, never normalised. If it did not come out of the speaker's mouth in
+ * that order, it does not belong here. */
+export interface TranscriptProposal {
+  id: string
+  text: string
+  /** [start, end) offsets into the transcript text. */
+  span: [number, number]
+  field: ProposedField
+  status: ProposalStatus
+  /** Seconds into the recording where this sentence starts, for seek-to-source
+   * playback. Null when the transcript has no aligned audio. */
+  spokenAt: number | null
+}
+
+export interface Transcript {
+  id: string
+  patientId: string
+  text: string
+  words: TranscriptWord[]
+  recordedAt: string // ISO datetime
+  /** Shown to the clinician so they always know what produced this. */
+  engine: string
+}
+
 export interface SeedData {
   staff: Staff[]
   patients: Patient[]
@@ -169,4 +221,244 @@ export interface SeedData {
   messages: Message[]
   results: Result[]
   tasks: Task[]
+}
+
+// ---------------------------------------------------------------------------
+// Clinic scheduling
+//
+// A separate domain from the ward model above. Two things shape it:
+//
+// 1. An Appointment holds one OR MORE participants. That is what lets the book
+//    tell a family group (one appointment, several patients, shared setup time)
+//    apart from an overbooking (a second appointment over the top of the first).
+//    Software that models an appointment as exactly one patient cannot express
+//    the difference, which is why both look identical on a normal grid.
+// 2. Nobody nominates a consult length. The slot holds a PREDICTION; the MBS
+//    item is read off the ACTUAL clock at the end. MBS note AN.0.9 determines
+//    the item by time actually spent with the patient — booked length is not a
+//    criterion, so making the patient guess a tier at booking buys nothing.
+// ---------------------------------------------------------------------------
+
+/** Clinic identity is deliberately separate from the ward `Patient`, which
+ * carries bed/admittingTeam/resusStatus. A real system unifies these; the
+ * prototype does not, so the ward model stays untouched. */
+export interface ClinicPatient {
+  id: string
+  name: string
+  dob: string // ISO date
+  sex: 'M' | 'F'
+  isNewPatient: boolean
+  /** Shared by people who live together — makes the family case first-class
+   * instead of something reception has to encode in a free-text note. */
+  householdId?: string
+  interpreterLanguage?: string
+}
+
+/** Chosen by whoever takes the booking, never inferred from the reason text.
+ * Reading meaning out of free text would be a step toward interpretation; a
+ * fixed tag list keeps the predictor grammatical and auditable. */
+export type ReasonTag =
+  | 'new-patient'
+  | 'multiple-issues'
+  | 'mental-health-plan'
+  | 'care-plan'
+  | 'procedure'
+  | 'results-review'
+  | 'script-only'
+  | 'immunisation'
+
+/** Time-tiered MBS general attendance items. Item 3 (Level A) is deliberately
+ * absent: its descriptor carries no time figure at all — it turns on the
+ * straightforward nature of the task, which is a clinical judgement and not
+ * something a clock can propose. */
+export type MbsItem = '23' | '36' | '44' | '123'
+
+export interface AppointmentParticipant {
+  id: string
+  clinicPatientId: string
+  /** The patient's own words. Never rewritten, never parsed for meaning. */
+  reasonText: string
+  reasonTags: ReasonTag[]
+  /** What the predictor expected for this person alone, before the group
+   * discount. Kept per-person so the booking screen can show its working. */
+  predictedMinutes: number
+  /** Measured, not typed. The clinician clicks through to the next person and
+   * the clock moves with them — nobody estimates anything, and nobody adds
+   * anything up. MBS note AN.0.9 counts time spent WITH the patient, which is
+   * exactly what this measures and exactly what typing a number afterwards
+   * only approximates. */
+  seenFrom?: string // ISO datetime
+  seenTo?: string // ISO datetime
+  /** Derived from the timestamps above at completion. Settable directly only
+   * to correct the record — a clinician who stepped out mid-consult is the
+   * only one who knows that, and AN.0.9 makes it their call. */
+  actualMinutes?: number
+}
+
+export type AppointmentStatus =
+  | 'requested' // held awaiting intake when the gate applies
+  | 'confirmed'
+  | 'arrived'
+  | 'in-progress'
+  | 'complete'
+  | 'dna'
+  | 'cancelled'
+
+/** Suggested from elapsed time alone, and never acted on by the system.
+ * `status` reuses ProposalStatus for the same reason the transcript layer does:
+ * the human accept gate is what keeps this the clinician's decision. An app
+ * that picks the item is giving billing advice, and the exposure for that sits
+ * with the doctor, not the software. */
+export interface BillingProposal {
+  participantId: string
+  elapsedMinutes: number
+  /** Absent below the Level B floor, where the only item that fits is Level A —
+   * and item 3 turns on the straightforward nature of the task, which no clock
+   * can judge. An empty suggestion is the honest output there. */
+  suggestedItem?: MbsItem
+  status: ProposalStatus
+  acceptedItem?: MbsItem
+  acceptedById?: string
+}
+
+export interface Appointment {
+  id: string
+  clinicianId: string // Staff.id
+  startsAt: string // ISO datetime
+  /** Wall-clock the grid holds. Sub-additive across participants — shared
+   * setup is counted once, so it is not the sum of predictedMinutes. */
+  reservedMinutes: number
+  participants: AppointmentParticipant[]
+  status: AppointmentStatus
+  urgent: boolean
+  bookedById: string
+  bookingSource: 'reception' | 'online' | 'clinician'
+  arrivedAt?: string
+  startedAt?: string
+  finishedAt?: string
+  billing?: BillingProposal[]
+}
+
+/** Per-clinician, because "can you be overbooked" is the clinician's call and
+ * not the practice manager's. */
+export interface ClinicianSchedulePolicy {
+  clinicianId: string
+  /** Family cap. Beyond this the booking is refused rather than predicted. */
+  maxParticipantsPerAppointment: number
+  concurrentPolicy: 'never' | 'ask' | 'allow-within-limit'
+  /** 1 = no overbooking at all. */
+  maxConcurrent: number
+  autoAcceptFor: ('urgent' | 'family-add')[]
+}
+
+export type ConcurrencyState =
+  | 'pending'
+  | 'accepted'
+  | 'declined'
+  /** Booked over the top anyway. Deliberately reachable: a practice manager
+   * sometimes must place an urgent patient mid-consult, and software that
+   * forbids it gets worked around. You cannot stop the override — you can stop
+   * it happening SILENTLY. */
+  | 'overridden'
+
+export interface ConcurrencyRequest {
+  id: string
+  /** The appointment being placed alongside existing ones. */
+  appointmentId: string
+  conflictsWith: string[]
+  requestedById: string
+  requestedAt: string
+  reason: string
+  state: ConcurrencyState
+  decidedById?: string
+  decidedAt?: string
+  decisionNote?: string
+}
+
+export type ScheduleEventKind =
+  | 'booked'
+  | 'participant-added'
+  | 'concurrency-requested'
+  | 'concurrency-accepted'
+  | 'concurrency-declined'
+  | 'concurrency-overridden'
+  | 'intake-bypassed'
+  | 'cancelled'
+  | 'completed'
+
+/** Append-only. Never edited, never deleted. "Triple-booked without being
+ * asked" is an accountability failure before it is a scheduling one, so every
+ * act that changes who is competing for a clinician's time leaves a record of
+ * who did it and why. */
+export interface ScheduleEvent {
+  id: string
+  at: string // ISO datetime
+  actorId: string
+  kind: ScheduleEventKind
+  appointmentId: string
+  detail: string
+}
+
+export interface IntakeSubmission {
+  id: string
+  clinicPatientId: string
+  appointmentId: string
+  startedAt: string
+  submittedAt?: string
+  answers: Record<string, string>
+  /** 0..1 across the questions that were asked. */
+  completeness: number
+  /** Every field the nurse needs before taking vitals is present. */
+  readyForNurse: boolean
+}
+
+/** One line of the predictor's working, shown on the booking screen. The
+ * prediction is never a bare number — reception has to be able to see why. */
+export interface DurationDriver {
+  label: string
+  minutes: number
+}
+
+export interface DurationPrediction {
+  /** Point estimate; what the grid reserves. */
+  minutes: number
+  /** Band. Asymmetric: consults overrun far more often than they underrun. */
+  low: number
+  high: number
+  confidence: 'low' | 'medium' | 'high'
+  drivers: DurationDriver[]
+}
+
+/** Seed shape for the clinic prototype. Appointment times are stored as
+ * offsets rather than absolute datetimes so the demo cannot rot — an empty day
+ * grid is a useless demo, and the ward seed has already had to be re-dated
+ * twice (LOOP_LEDGER F-b). Absolute times are built at load. */
+export interface ClinicSeedData {
+  clinicPatients: ClinicPatient[]
+  policies: ClinicianSchedulePolicy[]
+  /** Completed history that feeds the predictor. */
+  pastAppointments: {
+    clinicPatientId: string
+    clinicianId: string
+    daysAgo: number
+    actualMinutes: number
+    reasonTags: ReasonTag[]
+  }[]
+  /** Today's book. `startMinuteOfDay` is minutes past midnight local.
+   * Durations are absent on purpose: the store runs the predictor over
+   * `pastAppointments` at load, so the seed cannot drift out of step with the
+   * predictor and the demo shows real predicted numbers rather than typed-in
+   * ones. */
+  today: {
+    id: string
+    clinicianId: string
+    startMinuteOfDay: number
+    status: AppointmentStatus
+    urgent: boolean
+    participants: {
+      clinicPatientId: string
+      reasonText: string
+      reasonTags: ReasonTag[]
+    }[]
+  }[]
 }

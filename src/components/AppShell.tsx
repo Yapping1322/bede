@@ -6,6 +6,7 @@ import { Avatar } from './ui'
 const navItems = [
   { to: '/', label: 'Ward', icon: '⌂' },
   { to: '/tasks', label: 'Tasks', icon: '☑' },
+  { to: '/clinic', label: 'Clinic', icon: '◷' },
   { to: '/handover', label: 'Handover', icon: '⇄' },
   { to: '/settings', label: 'Settings', icon: '⚙' },
 ]
