@@ -41,6 +41,31 @@ threshold, sponsored by a clinical champion. Not open tender — see §5.
 
 ## 2. What is explicitly NOT the plan
 
+> **Amendment, 22 Aug 2026 — voice capture is back, in a bounded form.** The
+> blanket "not an ambient scribe" below stands for the product Heidi and Lyrebird
+> sell: audio in, written consultation note out. It no longer describes the
+> build. Bede now captures audio and transcribes it *as an input to the
+> structured layer* — the transcript is split into sentences, each sentence is
+> proposed for a structured field (medication / allergy / result) as a verbatim
+> character slice, and nothing enters the record until a clinician accepts it.
+> `src/lib/transcriptExtract.ts`, locked by the slice-equality invariant in
+> `transcriptExtract.test.ts`. Recogniser is local (`tools/asr/server.py`); the
+> tab is `import.meta.env.DEV`-gated and is verified absent from the production
+> bundle.
+>
+> Why the reversal: the reasoning below argues correctly that the scribe *market*
+> is closed, and that is still true. It does not argue that transcription is
+> useless as an input, which is the distinction that was missed. TGA's own test
+> (§3) puts verbatim transcription outside the device definition, and structured
+> field population is the gap both RACGP and Heidi concede — so the capability is
+> a feeder for the wedge rather than a competitor to the incumbents.
+>
+> **Open risk, unresolved:** routing a sentence to a clinical category reads what
+> it is about, which is a step past the deliberately *grammatical* bucketing in
+> `reportSummary.ts`. The human accept gate is what holds it restate-only. This
+> needs a written classification opinion before it touches a real site, and the
+> test suite is the evidence that opinion rests on, not a substitute for it.
+
 **Not an ambient scribe.** Lyrebird has been **free to every BP Premier
 customer since 16 Feb 2026** — natively embedded, unlimited consult notes,
 zero dollars — and Best Practice holds ~80% of AU GP practice-management-
@@ -267,3 +292,11 @@ just a safety posture.
 4. **Structured write-back is the differentiator** — nobody has solved it,
    both incumbents concede it. Build toward it, restate-only.
 5. **Do not** pursue Bp Partner Network until 1–3 are moving.
+6. **Get a written device-classification opinion on transcript→structured-field
+   routing** (added 22 Aug, see the §2 amendment). Gates any real-site use of the
+   voice path. Until it exists the capture tab stays dev-only.
+7. **Build the patient-facing surface, or stop claiming it.** `StaffRole` in
+   `src/types.ts` is `consultant | registrar | rmo | student | nurse` — there is
+   no patient role and no patient view. "Providers and patients on one surface"
+   is the strongest version of the pitch and currently the least true; a
+   two-sided claim needs a two-sided app.

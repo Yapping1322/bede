@@ -196,3 +196,19 @@ export function TimelineItem({ children }: { children: ReactNode }) {
     </li>
   )
 }
+
+/** Renders `text` with one character span marked. Used wherever a restatement
+ * has to point back at the words it was lifted from — a report, a transcript —
+ * so the source stays on screen and the claim stays checkable. */
+export function Highlighted({ text, span }: { text: string; span: [number, number] | null }) {
+  if (!span || span[1] <= span[0]) return <>{text}</>
+  return (
+    <>
+      {text.slice(0, span[0])}
+      <mark className="bg-accent-500/20 text-slate-900 rounded px-0.5">
+        {text.slice(span[0], span[1])}
+      </mark>
+      {text.slice(span[1])}
+    </>
+  )
+}

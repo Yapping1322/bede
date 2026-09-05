@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { summaryProvider } from '../data/mockStores'
-import { Badge, ErrorState, Skeleton } from './ui'
+import { Badge, ErrorState, Highlighted, Skeleton } from './ui'
 import type { LineKind, ReportSummary, Result, SummaryLine } from '../types'
 
 // Restatement of a report the issuing provider already signed off, shown
@@ -16,19 +16,6 @@ const GROUPS: { kind: LineKind; label: string; tone: 'info' | 'ok' | 'neutral' }
   { kind: 'excluded', label: 'Explicitly excluded', tone: 'ok' },
   { kind: 'normal', label: 'Reported normal', tone: 'neutral' },
 ]
-
-function Highlighted({ text, span }: { text: string; span: [number, number] | null }) {
-  if (!span || span[1] <= span[0]) return <>{text}</>
-  return (
-    <>
-      {text.slice(0, span[0])}
-      <mark className="bg-accent-500/20 text-slate-900 rounded px-0.5">
-        {text.slice(span[0], span[1])}
-      </mark>
-      {text.slice(span[1])}
-    </>
-  )
-}
 
 function LineButton({
   line,

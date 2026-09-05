@@ -45,6 +45,8 @@ export default function PatientShell() {
     { to: 'messages', label: 'Messages', badge: unread },
     { to: 'results', label: 'Results', badge: 0 },
     { to: 'tasks', label: 'Tasks', badge: openTasks },
+    // Dev only — see the header of VoiceTab.tsx.
+    ...(import.meta.env.DEV ? [{ to: 'voice', label: 'Voice', badge: 0 }] : []),
   ]
 
   return (
