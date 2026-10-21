@@ -236,6 +236,9 @@ class MockScheduleStore extends Emitter implements ScheduleStore {
   blockers(appointmentId: string): string[] {
     const appointment = this.get(appointmentId)
     if (!appointment) return []
+    // A closed appointment cannot be waiting on anything: the concurrency
+    // request and the intake that once held it are history now.
+    if (['complete', 'cancelled', 'dna'].includes(appointment.status)) return []
     const out: string[] = []
     const request = this.concurrencyFor(appointmentId)
     if (request?.state === 'pending') {

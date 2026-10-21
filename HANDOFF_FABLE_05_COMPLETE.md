@@ -7,7 +7,7 @@ the 21 Oct 2026 session that finished the demo build and shipped it.
 ## State
 
 - `main` at the clinic-scheduling merge, plus the completion pass. Clean tree.
-- Production build clean; **250 unit tests** passing across 9 files.
+- Production build clean; **252 unit tests** passing across 9 files.
 - Live: **https://bede-demo.vercel.app** (Vercel project `bede`, team
   `yapping1322s-projects`). `origin` is `github.com/Yapping1322/bede`.
 - Two surfaces: the ward (`/`, patient tabs, `/tasks`, `/handover`) and the

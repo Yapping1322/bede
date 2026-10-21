@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { DEMO_PREFIX, clearDemoData, demoKey, isPersisted, load, save } from './persistence'
 import { MockTaskStore } from '../data/mockStores'
 import { MockScheduleStore, dayKey } from '../data/scheduleStore'
+import { VisitStore } from '../data/visitStore'
 
 // Minimal Storage stand-in. The real one is a browser API; node has none, which
 // is why persistence is inert in the rest of the suite.
@@ -93,6 +94,14 @@ describe('store rehydration', () => {
 
     const second = new MockScheduleStore()
     expect(second.get('ap1')?.status).toBe('arrived')
+  })
+
+  it('keeps visited marks across instances', () => {
+    const first = new VisitStore()
+    first.markVisited('p1')
+
+    const second = new VisitStore()
+    expect(second.lastVisited('p1')).toEqual(expect.any(String))
   })
 
   it('discards a clinic book stamped with another day', () => {

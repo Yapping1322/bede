@@ -935,6 +935,12 @@ describe('did not attend and cancellation', () => {
     expect(store.get('ap4')!.status).toBe('complete')
   })
 
+  it('clears the waiting state when the appointment closes', () => {
+    expect(store.blockers('ap5').length).toBeGreaterThan(0) // awaiting intake
+    store.cancel('ap5', RECEPTION)
+    expect(store.blockers('ap5')).toEqual([])
+  })
+
   it('cancels, records the reason, and cannot cancel twice', () => {
     store.cancel('ap2', RECEPTION, 'Patient rang to cancel')
     expect(store.get('ap2')!.status).toBe('cancelled')
