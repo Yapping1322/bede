@@ -1,6 +1,8 @@
 import { useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { extractProposals } from '../lib/transcriptExtract'
+import { notesStore } from '../data/mockStores'
+import { useUser } from '../context/UserContext'
 import { Badge, EmptyState, ErrorState, Highlighted } from './ui'
 import type { BadgeTone } from './ui'
 import type { ProposedField, Transcript, TranscriptProposal } from '../types'
@@ -34,11 +36,13 @@ type Phase = 'idle' | 'recording' | 'transcribing' | 'ready' | 'failed'
 
 export default function VoiceTab() {
   const { id: patientId = '' } = useParams()
+  const { user } = useUser()
   const [phase, setPhase] = useState<Phase>('idle')
   const [consented, setConsented] = useState(false)
   const [transcript, setTranscript] = useState<Transcript | null>(null)
   const [proposals, setProposals] = useState<TranscriptProposal[]>([])
   const [focusedId, setFocusedId] = useState<string | null>(null)
+  const [saved, setSaved] = useState(false)
 
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const [audioUrl, setAudioUrl] = useState<string | null>(null)
@@ -71,6 +75,9 @@ export default function VoiceTab() {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
     const recorder = new MediaRecorder(stream)
     chunksRef.current = []
+    setSaved(false)
+    setTranscript(null)
+    setProposals([])
     recorder.ondataavailable = (e) => chunksRef.current.push(e.data)
     recorder.onstop = () => {
       stream.getTracks().forEach((t) => t.stop())
@@ -115,6 +122,24 @@ export default function VoiceTab() {
   const focused = proposals.find((p) => p.id === focusedId) ?? null
   const pending = proposals.filter((p) => p.status === 'proposed')
   const accepted = proposals.filter((p) => p.status === 'accepted')
+
+  /** The last step of the contract: accepted lines become a progress note,
+   * still verbatim, attributed to the clinician who accepted them. Without this
+   * the screen says "accepted into the record" and the record never changes. */
+  function writeToRecord() {
+    if (saved || accepted.length === 0) return
+    const grouped = FIELDS.flatMap((f) => {
+      const items = accepted.filter((p) => p.field === f.field)
+      return items.length ? [`${f.label}: ${items.map((p) => p.text).join('; ')}`] : []
+    })
+    notesStore.add({
+      patientId,
+      authorId: user.id,
+      kind: 'progress',
+      body: ['Voice capture — lines accepted by the clinician, verbatim.', ...grouped].join('\n'),
+    })
+    setSaved(true)
+  }
 
   return (
     <div className="p-4 space-y-4">
@@ -267,6 +292,21 @@ export default function VoiceTab() {
               Every line above is a word-for-word extract of the recording, accepted by you. Nothing
               here was written by the system.
             </p>
+            {saved ? (
+              <p className="text-xs text-ok">
+                Written to the record as a progress note.{' '}
+                <Link to={`/patient/${patientId}/notes`} className="font-semibold underline">
+                  Open notes
+                </Link>
+              </p>
+            ) : (
+              <button
+                onClick={writeToRecord}
+                className="w-full rounded-lg bg-slate-900 text-white text-sm font-semibold py-2"
+              >
+                Write {accepted.length} accepted line{accepted.length === 1 ? '' : 's'} to a note
+              </button>
+            )}
           </div>
         </div>
       )}

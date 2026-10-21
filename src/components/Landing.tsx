@@ -32,18 +32,24 @@ export default function Landing({ onEnter }: { onEnter: () => void }) {
             <span className="text-sky-400">•</span> Results: pathology and
             imaging in one feed, lab-reported flags displayed
           </li>
+          <li className="flex gap-2">
+            <span className="text-sky-400">•</span> Clinic day: an appointment
+            book that predicts how long a consultation will take, keeps a family
+            in one booking, and never double-books a doctor without asking
+          </li>
         </ul>
         <button
           onClick={onEnter}
           className="mt-8 w-full bg-sky-500 hover:bg-sky-400 active:bg-sky-600 text-white font-semibold rounded-xl py-3.5 text-lg"
         >
-          Enter demo ward
+          Enter the demo
         </button>
         <p className="mt-4 text-xs text-slate-500 leading-relaxed">
           Prototype on entirely synthetic data. No real patients, no real
           results, no connection to any clinical system. Built as a
           conversation starter for hospital IT and privacy governance, not
-          for clinical use.
+          for clinical use. Notes, tasks and the clinic book stay in this
+          browser so the demo survives a reload; reset clears them.
         </p>
         <p className="mt-3 text-xs text-slate-500">
           An Acutis concept ·{' '}

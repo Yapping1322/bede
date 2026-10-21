@@ -209,3 +209,34 @@ describe('spokenAt()', () => {
     expect(spokenAt([100, 120], words)).toBeNull()
   })
 })
+
+describe('the recogniser contract', () => {
+  // Verbatim response text from tools/asr/server.py (faster-whisper small.en,
+  // local, no network) after POSTing a spoken test sentence on 2026-10-21.
+  // Pinning the real output keeps the recogniser half and the extractor half on
+  // the same shape — including the leading space it returns.
+  const recognised =
+    ' He is allergic to penicillin. He takes doxycycline 100 mg daily.'
+
+  const transcript: Transcript = {
+    id: 't-asr',
+    patientId: 'p1',
+    text: recognised,
+    words: [],
+    recordedAt: '2026-10-21T07:27:00.000Z',
+    engine: 'faster-whisper small.en · local · no network',
+  }
+
+  it('routes what the local engine actually returned', () => {
+    const proposals = extractProposals(transcript)
+    expect(proposals.map((p) => p.field)).toEqual(['allergy', 'medication'])
+    expect(proposals[0].text).toBe('He is allergic to penicillin.')
+    expect(proposals[1].text).toBe('He takes doxycycline 100 mg daily.')
+  })
+
+  it('still slices every proposal back out of the recognised text', () => {
+    for (const proposal of extractProposals(transcript)) {
+      expect(recognised.slice(proposal.span[0], proposal.span[1])).toBe(proposal.text)
+    }
+  })
+})
