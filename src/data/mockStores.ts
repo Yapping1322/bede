@@ -9,15 +9,25 @@ import type {
 } from './providers'
 import seedJson from '../seed/patients.json'
 import { summariseReport } from '../lib/reportSummary'
+import { load, save } from '../lib/persistence'
 
-// Demo-only stores: seed JSON + in-memory mutations. Nothing persists across
-// a reload, by design — the prototype holds no data anywhere but this tab.
+// Demo-only stores: seed JSON plus mutations, snapshotted to localStorage so a
+// reload does not throw away work someone just did. Still synthetic data only,
+// still no network. The clinic book lives in scheduleStore.ts and follows the
+// same convention.
 
 const seed = seedJson as unknown as SeedData
+
+const PATIENT_KEY = 'patients'
+const NOTES_KEY = 'notes'
+const MESSAGES_KEY = 'messages'
+const TASKS_KEY = 'tasks'
 
 class Emitter {
   private listeners = new Set<() => void>()
   version = 0
+  /** Set by a store that wants its slice written after every mutation. */
+  protected persist?: () => void
   subscribe = (fn: () => void) => {
     this.listeners.add(fn)
     return () => {
@@ -26,6 +36,7 @@ class Emitter {
   }
   protected emit() {
     this.version++
+    this.persist?.()
     this.listeners.forEach((fn) => fn())
   }
 }
@@ -34,7 +45,13 @@ const byNewest = (a: { createdAt: string }, b: { createdAt: string }) =>
   b.createdAt.localeCompare(a.createdAt)
 
 class MockPatientStore extends Emitter implements PatientStore {
-  private patients: Patient[] = [...seed.patients]
+  private patients: Patient[]
+
+  constructor() {
+    super()
+    this.patients = load<Patient[]>(PATIENT_KEY) ?? [...seed.patients]
+    this.persist = () => save(PATIENT_KEY, this.patients)
+  }
 
   list(): Patient[] {
     return this.patients
@@ -53,7 +70,13 @@ class MockPatientStore extends Emitter implements PatientStore {
 }
 
 class MockNotesStore extends Emitter implements NotesStore {
-  private notes: Note[] = [...seed.notes]
+  private notes: Note[]
+
+  constructor() {
+    super()
+    this.notes = load<Note[]>(NOTES_KEY) ?? [...seed.notes]
+    this.persist = () => save(NOTES_KEY, this.notes)
+  }
 
   forPatient(patientId: string): Note[] {
     return this.notes.filter((n) => n.patientId === patientId).sort(byNewest)
@@ -99,16 +122,25 @@ class MockNotesStore extends Emitter implements NotesStore {
 }
 
 class MockMessageStore extends Emitter implements MessageStore {
-  private messages: Message[] = [...seed.messages]
+  private messages: Message[]
   private seen = new Map<string, number>()
 
   constructor() {
     super()
-    // Start the demo with a couple of unread threads so badges show.
-    seed.patients.forEach((p, i) => {
-      const count = this.messages.filter((m) => m.patientId === p.id).length
-      this.seen.set(p.id, Math.max(0, count - (i % 3)))
-    })
+    const saved = load<{ messages: Message[]; seen: [string, number][] }>(MESSAGES_KEY)
+    if (saved) {
+      this.messages = saved.messages
+      this.seen = new Map(saved.seen)
+    } else {
+      this.messages = [...seed.messages]
+      // Start the demo with a couple of unread threads so badges show.
+      seed.patients.forEach((p, i) => {
+        const count = this.messages.filter((m) => m.patientId === p.id).length
+        this.seen.set(p.id, Math.max(0, count - (i % 3)))
+      })
+    }
+    this.persist = () =>
+      save(MESSAGES_KEY, { messages: this.messages, seen: [...this.seen.entries()] })
   }
 
   forPatient(patientId: string): Message[] {
@@ -152,7 +184,13 @@ class MockResultsProvider extends Emitter implements ResultsProvider {
 }
 
 export class MockTaskStore extends Emitter implements TaskStore {
-  private tasks: Task[] = [...seed.tasks]
+  private tasks: Task[]
+
+  constructor() {
+    super()
+    this.tasks = load<Task[]>(TASKS_KEY) ?? [...seed.tasks]
+    this.persist = () => save(TASKS_KEY, this.tasks)
+  }
 
   list(): Task[] {
     return this.tasks

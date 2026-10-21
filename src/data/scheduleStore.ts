@@ -24,15 +24,20 @@ import {
   type ParticipantInput,
 } from '../lib/consultDuration'
 import { itemForElapsedMinutes } from '../lib/mbsItems'
+import { load, save } from '../lib/persistence'
 import seedJson from '../seed/clinic.json'
 
-// The clinic appointment book. Demo-only, in-memory, synthetic — same posture
-// as mockStores.ts, and a local Emitter like visitStore.ts.
+// The clinic appointment book. Demo-only, synthetic — same posture as
+// mockStores.ts, and a local Emitter like visitStore.ts.
 //
 // Appointment times come out of the seed as offsets (days ago, minute of day)
 // and become absolute at load, so the demo cannot go stale. The ward seed has
 // already had to be re-dated twice; an appointment book that rots is an empty
 // screen rather than a slightly wrong date.
+//
+// The book persists within its calendar day and is discarded at the next one:
+// a book is for today, and reloading yesterday's appointments would show a
+// clinic that has already closed.
 
 const seed = seedJson as unknown as ClinicSeedData
 
@@ -49,6 +54,8 @@ const DEFAULT_POLICY: Omit<ClinicianSchedulePolicy, 'clinicianId'> = {
 class Emitter {
   private listeners = new Set<() => void>()
   version = 0
+  /** Set by the store so every mutation writes the book back to storage. */
+  protected persist?: () => void
   subscribe = (fn: () => void) => {
     this.listeners.add(fn)
     return () => {
@@ -57,6 +64,7 @@ class Emitter {
   }
   protected emit() {
     this.version++
+    this.persist?.()
     this.listeners.forEach((fn) => fn())
   }
 }
@@ -86,6 +94,19 @@ interface CompletedConsult {
   actualMinutes: number
 }
 
+/** The whole mutable book, stamped with the day it belongs to. */
+interface PersistedBook {
+  day: string
+  appointments: Appointment[]
+  concurrency: ConcurrencyRequest[]
+  intakes: IntakeSubmission[]
+  eventLog: ScheduleEvent[]
+  completed: CompletedConsult[]
+  counter: number
+}
+
+const SCHEDULE_KEY = 'schedule'
+
 class MockScheduleStore extends Emitter implements ScheduleStore {
   private clinicPatients: ClinicPatient[] = [...seed.clinicPatients]
   private policies = new Map<string, ClinicianSchedulePolicy>(
@@ -104,6 +125,10 @@ class MockScheduleStore extends Emitter implements ScheduleStore {
 
   constructor() {
     super()
+    if (this.restore()) {
+      this.persist = () => this.saveBook()
+      return
+    }
     // History is in place before anything is predicted, so the seeded book
     // shows real predictor output rather than numbers typed into the seed.
     for (const entry of seed.today) {
@@ -126,6 +151,32 @@ class MockScheduleStore extends Emitter implements ScheduleStore {
         this.openIntake(entry.id, entry.participants[0].clinicPatientId)
       }
     }
+    this.persist = () => this.saveBook()
+  }
+
+  /** Reload the book only when it belongs to today; otherwise reseed. */
+  private restore(): boolean {
+    const saved = load<PersistedBook>(SCHEDULE_KEY)
+    if (!saved || saved.day !== dayKey(new Date())) return false
+    this.appointments = saved.appointments
+    this.concurrency = saved.concurrency
+    this.intakes = saved.intakes
+    this.eventLog = saved.eventLog
+    this.completed = saved.completed
+    this.counter = saved.counter
+    return true
+  }
+
+  private saveBook(): void {
+    save(SCHEDULE_KEY, {
+      day: dayKey(new Date()),
+      appointments: this.appointments,
+      concurrency: this.concurrency,
+      intakes: this.intakes,
+      eventLog: this.eventLog,
+      completed: this.completed,
+      counter: this.counter,
+    } satisfies PersistedBook)
   }
 
   // --- reads -------------------------------------------------------------

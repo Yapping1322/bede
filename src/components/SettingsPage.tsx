@@ -1,6 +1,7 @@
 import { staff } from '../data/mockStores'
 import { useUser } from '../context/UserContext'
 import { roleLabels, sessionKeys } from '../lib/utils'
+import { clearDemoData } from '../lib/persistence'
 import { Avatar, Card } from './ui'
 
 export default function SettingsPage() {
@@ -58,6 +59,7 @@ export default function SettingsPage() {
             onClick={() => {
               sessionStorage.removeItem(sessionKeys.entered)
               sessionStorage.removeItem(sessionKeys.userId)
+              clearDemoData()
               window.location.assign('/')
             }}
             className="w-full border border-alert/40 text-alert font-semibold rounded-xl py-3 hover:bg-alert/5"
@@ -65,8 +67,8 @@ export default function SettingsPage() {
             Reset demo data
           </button>
           <p className="mt-2 px-1 text-xs text-slate-400">
-            Everything lives in this tab only. Resetting reloads the seed data and discards any
-            notes or messages you added.
+            Notes, messages, tasks and the clinic book are saved in this browser so a reload does
+            not lose them. Resetting clears that stored copy and reloads the synthetic seed.
           </p>
         </section>
       </div>
