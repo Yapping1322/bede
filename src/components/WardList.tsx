@@ -4,6 +4,7 @@ import { messageStore, notesStore, patientStore, resultsProvider, taskStore } fr
 import { visitStore } from '../data/visitStore'
 import { age, formatDate, stripAgeSexPrefix, timeAgo, useStore } from '../lib/utils'
 import { Badge, Card, CountBadge, EmptyState } from './ui'
+import SinceLastLook from './SinceLastLook'
 import type { Patient } from '../types'
 
 type SortBy = 'bed' | 'recent'
@@ -69,6 +70,10 @@ export default function WardList() {
             {opt.label}
           </button>
         ))}
+      </div>
+
+      <div className="pb-2">
+        <SinceLastLook compact />
       </div>
 
       <div className="space-y-2">
