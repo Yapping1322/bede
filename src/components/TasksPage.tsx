@@ -3,13 +3,15 @@ import { Link } from 'react-router-dom'
 import { patientStore, taskStore } from '../data/mockStores'
 import { useUser } from '../context/UserContext'
 import { formatDateTime, staffById, useStore } from '../lib/utils'
+import { TASK_KINDS, taskKindLabels, taskKindOf } from '../lib/taskKind'
 import { Badge, Card, EmptyState } from './ui'
-import type { Task } from '../types'
+import type { Task, TaskKind } from '../types'
 
 // Ward-wide task list — coordination only, no computed urgency. Ordering is
 // plain open-first then newest-created; creation stays on the patient's own
 // Tasks tab, this page is read/act (mark done, reopen).
 type Filter = 'all' | 'mine' | 'open' | 'done'
+type KindFilter = 'any' | TaskKind
 
 const byNewestOpenFirst = (a: Task, b: Task) => {
   if (a.status !== b.status) return a.status === 'open' ? -1 : 1
@@ -21,6 +23,7 @@ export default function TasksPage() {
   useStore(patientStore)
   const { user } = useUser()
   const [filter, setFilter] = useState<Filter>('all')
+  const [kindFilter, setKindFilter] = useState<KindFilter>('any')
 
   const tasks = taskStore.list()
   const mineCount = tasks.filter((t) => t.assigneeId === user.id).length
@@ -41,6 +44,7 @@ export default function TasksPage() {
       if (filter === 'done') return t.status === 'done'
       return true
     })
+    .filter((t) => kindFilter === 'any' || taskKindOf(t) === kindFilter)
     .sort(byNewestOpenFirst)
 
   return (
@@ -69,6 +73,33 @@ export default function TasksPage() {
           ))}
         </div>
 
+        <div className="pb-3 flex items-center gap-2">
+          <label htmlFor="task-kind" className="text-xs text-slate-400">
+            Kind
+          </label>
+          <select
+            id="task-kind"
+            value={kindFilter}
+            onChange={(e) => setKindFilter(e.target.value as KindFilter)}
+            className="rounded-full border border-slate-300 bg-white px-3 py-1.5 text-xs text-slate-600 focus:outline-none focus:border-accent-500"
+          >
+            <option value="any">Any kind</option>
+            {TASK_KINDS.map((k) => (
+              <option key={k} value={k}>
+                {taskKindLabels[k]}
+              </option>
+            ))}
+          </select>
+          {kindFilter !== 'any' && (
+            <button
+              onClick={() => setKindFilter('any')}
+              className="text-xs font-semibold text-slate-500 hover:text-slate-700"
+            >
+              Clear
+            </button>
+          )}
+        </div>
+
         {filtered.length === 0 ? (
           <EmptyState
             title="No tasks match this filter"
@@ -92,6 +123,9 @@ export default function TasksPage() {
                     <span className="text-sm font-semibold text-slate-900">
                       {patient?.name ?? 'Unknown patient'}
                     </span>
+                    {taskKindOf(t) !== 'other' && (
+                      <Badge tone="purple">{taskKindLabels[taskKindOf(t)]}</Badge>
+                    )}
                   </Link>
 
                   <div className="mt-1.5 flex items-start justify-between gap-2">

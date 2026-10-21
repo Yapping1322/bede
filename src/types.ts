@@ -116,6 +116,11 @@ export type Result = PathologyResult | ImagingResult
 
 export type TaskStatus = 'open' | 'done'
 
+/** What kind of coordination the task is. Chosen by the person writing it —
+ * the system never infers a kind, because "this is a referral" is a judgement
+ * about the request, and referrals are the ones people need to find again. */
+export type TaskKind = 'referral' | 'transport' | 'paperwork' | 'follow-up' | 'other'
+
 /** A ward administrative/logistics task — booking transport, chasing forms,
  * confirming outpatient follow-up, scheduling a family meeting, and the
  * like. Created, assigned and closed only by explicit human action; never
@@ -128,6 +133,8 @@ export interface Task {
   assigneeId?: string
   text: string
   status: TaskStatus
+  /** Seed tasks predate `kind` — absent means 'other'. */
+  kind?: TaskKind
   completedAt?: string
   completedById?: string
 }
