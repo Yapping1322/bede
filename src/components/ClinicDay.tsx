@@ -3,11 +3,15 @@ import type { Appointment, AppointmentParticipant, ConcurrencyRequest, MbsItem }
 import { dayKey, scheduleStore } from '../data/scheduleStore'
 import { staff } from '../data/mockStores'
 import { TIME_TIERS, levelForItem } from '../lib/mbsItems'
+import { isRunningLate, lateness } from '../lib/clinicClock'
 import { useUser } from '../context/UserContext'
 import { useStore } from '../lib/utils'
 import BookingPanel from './BookingPanel'
+import type { Draft } from './BookingPanel'
 import AddParticipantPanel from './AddParticipantPanel'
 import IntakeForm from './IntakeForm'
+import ClinicDaySummary from './ClinicDaySummary'
+import PatientHistory from './PatientHistory'
 import { Badge, Card, EmptyState, Sheet } from './ui'
 import type { BadgeTone } from './ui'
 
@@ -67,29 +71,31 @@ export default function ClinicDay() {
   useStore(scheduleStore)
   const { user } = useUser()
   const [clinicianId, setClinicianId] = useState(clinicians[0]?.id ?? 's1')
-  const [bookingAt, setBookingAt] = useState<string | null>(null)
+  const [booking, setBooking] = useState<{ at: string; drafts?: Draft[] } | null>(null)
   const [intakeFor, setIntakeFor] = useState<string | null>(null)
   const [finishing, setFinishing] = useState<string | null>(null)
   const [adding, setAdding] = useState<string | null>(null)
+  const [historyFor, setHistoryFor] = useState<string | null>(null)
+  const [dnaArmed, setDnaArmed] = useState<string | null>(null)
   const [notes, setNotes] = useState<Record<string, string>>({})
   const [showLog, setShowLog] = useState(false)
 
-  // Drives the live counter while a consult is running.
+  // Drives the live consult counter (1 s) and the running-late line (30 s).
   const [now, setNow] = useState(() => Date.now())
   useEffect(() => {
-    if (finishing === null) return
-    const id = setInterval(() => setNow(Date.now()), 1000)
+    const id = setInterval(() => setNow(Date.now()), finishing === null ? 30_000 : 1_000)
     return () => clearInterval(id)
   }, [finishing])
 
   const today = dayKey(new Date())
   const book = scheduleStore.forClinician(clinicianId, today)
   const pending = scheduleStore.pending(clinicianId)
+  const late = lateness(book, now)
 
   const openBooking = () => {
     const d = new Date()
     d.setMinutes(d.getMinutes() < 30 ? 30 : 60, 0, 0)
-    setBookingAt(d.toISOString())
+    setBooking({ at: d.toISOString() })
   }
 
   const decide = (request: ConcurrencyRequest, decision: 'accepted' | 'declined') =>
@@ -112,6 +118,11 @@ export default function ClinicDay() {
               ))}
             </select>
             <p className="text-xs text-slate-500">{policyLine(clinicianId)}</p>
+            {late && (
+              <p className="pt-0.5 text-xs font-semibold text-warn">
+                Running {late.minutes} min behind
+              </p>
+            )}
           </div>
           <button
             onClick={openBooking}
@@ -213,6 +224,7 @@ export default function ClinicDay() {
                       )}
                     </div>
                     <div className="flex shrink-0 gap-1">
+                      {isRunningLate(appointment, now) && <Badge tone="warn">Late</Badge>}
                       {appointment.urgent && <Badge tone="alert">Urgent</Badge>}
                       <Badge tone={statusTone[appointment.status]}>{appointment.status}</Badge>
                     </div>
@@ -224,6 +236,12 @@ export default function ClinicDay() {
                       return (
                         <li key={participant.id} className="text-sm">
                           <span className="font-medium text-slate-800">{patient?.name}</span>
+                          <button
+                            onClick={() => setHistoryFor(participant.clinicPatientId)}
+                            className="ml-1.5 text-xs font-semibold text-accent-600 hover:text-accent-500"
+                          >
+                            history
+                          </button>
                           <span className="text-slate-400"> · {participant.predictedMinutes} min alone</span>
                           {participant.actualMinutes !== undefined && (
                             <span className="text-slate-600"> · took {participant.actualMinutes} min</span>
@@ -388,12 +406,62 @@ export default function ClinicDay() {
                         Add someone
                       </button>
                     )}
+                    {(appointment.status === 'requested' || appointment.status === 'confirmed') &&
+                      (dnaArmed === appointment.id ? (
+                        <button
+                          onClick={() => {
+                            scheduleStore.markDna(appointment.id, user.id)
+                            setDnaArmed(null)
+                          }}
+                          className="text-xs font-semibold rounded-lg bg-alert text-white px-2.5 py-1.5"
+                        >
+                          Confirm did not attend
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => setDnaArmed(appointment.id)}
+                          className="text-xs font-semibold rounded-lg border border-alert/40 text-alert px-2.5 py-1.5"
+                        >
+                          Did not attend
+                        </button>
+                      ))}
+                    {['requested', 'confirmed', 'arrived', 'in-progress'].includes(
+                      appointment.status,
+                    ) && (
+                      <button
+                        onClick={() => scheduleStore.cancel(appointment.id, user.id)}
+                        className="text-xs font-semibold rounded-lg border border-slate-300 text-slate-600 px-2.5 py-1.5"
+                      >
+                        Cancel
+                      </button>
+                    )}
+                    {(appointment.status === 'dna' || appointment.status === 'cancelled') && (
+                      <button
+                        onClick={() => {
+                          const d = new Date()
+                          d.setMinutes(d.getMinutes() < 30 ? 30 : 60, 0, 0)
+                          setBooking({
+                            at: d.toISOString(),
+                            drafts: appointment.participants.map((p) => ({
+                              clinicPatientId: p.clinicPatientId,
+                              reasonText: p.reasonText,
+                              reasonTags: p.reasonTags,
+                            })),
+                          })
+                        }}
+                        className="text-xs font-semibold rounded-lg bg-accent-500 text-white px-2.5 py-1.5"
+                      >
+                        Rebook
+                      </button>
+                    )}
                   </div>
                 </Card>
               )
             })}
           </div>
         )}
+
+        <ClinicDaySummary clinicianId={clinicianId} day={today} />
 
         <div>
           <button
@@ -418,8 +486,12 @@ export default function ClinicDay() {
         </div>
       </div>
 
-      <Sheet open={bookingAt !== null} title="New appointment" onClose={() => setBookingAt(null)}>
-        {bookingAt && (
+      <Sheet
+        open={booking !== null}
+        title={booking?.drafts ? 'Rebook appointment' : 'New appointment'}
+        onClose={() => setBooking(null)}
+      >
+        {booking && (
           <>
             <label className="block pb-3">
               <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
@@ -427,23 +499,32 @@ export default function ClinicDay() {
               </span>
               <input
                 type="time"
-                value={hhmm(bookingAt)}
+                value={hhmm(booking.at)}
                 onChange={(e) => {
                   const [h, m] = e.target.value.split(':').map(Number)
-                  const d = new Date(bookingAt)
+                  const d = new Date(booking.at)
                   d.setHours(h, m, 0, 0)
-                  setBookingAt(d.toISOString())
+                  setBooking({ ...booking, at: d.toISOString() })
                 }}
                 className="mt-1 w-full rounded-lg border border-slate-200 px-3 py-2 text-sm"
               />
             </label>
             <BookingPanel
               clinicianId={clinicianId}
-              startsAt={bookingAt}
-              onBooked={() => setBookingAt(null)}
+              startsAt={booking.at}
+              initialDrafts={booking.drafts}
+              onBooked={() => setBooking(null)}
             />
           </>
         )}
+      </Sheet>
+
+      <Sheet
+        open={historyFor !== null}
+        title="Consultation history"
+        onClose={() => setHistoryFor(null)}
+      >
+        {historyFor && <PatientHistory clinicPatientId={historyFor} />}
       </Sheet>
 
       <Sheet open={adding !== null} title="Add someone to this appointment" onClose={() => setAdding(null)}>

@@ -33,18 +33,24 @@ interface Draft {
   reasonTags: ReasonTag[]
 }
 
+export type { Draft }
+
 export default function BookingPanel({
   clinicianId,
   startsAt,
   onBooked,
+  initialDrafts = [],
 }: {
   clinicianId: string
   startsAt: string
   onBooked: (outcome: BookingOutcome) => void
+  /** Rebooking an appointment that was cancelled or missed starts from who was
+   * already expected, so the reason survives the first failure. */
+  initialDrafts?: Draft[]
 }) {
   useStore(scheduleStore)
   const { user } = useUser()
-  const [drafts, setDrafts] = useState<Draft[]>([])
+  const [drafts, setDrafts] = useState<Draft[]>(initialDrafts)
   const [urgent, setUrgent] = useState(false)
   const [refusal, setRefusal] = useState<string | null>(null)
 

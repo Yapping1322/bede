@@ -911,3 +911,63 @@ describe('the event log', () => {
     expect(calls).toBe(1)
   })
 })
+
+describe('did not attend and cancellation', () => {
+  it('records a DNA against the actor and releases the held time', () => {
+    const appointment = store.get('ap3')!
+    store.markDna('ap3', RECEPTION)
+
+    expect(store.get('ap3')!.status).toBe('dna')
+    const event = store.events('ap3').find((e) => e.kind === 'did-not-attend')
+    expect(event?.actorId).toBe(RECEPTION)
+
+    // The slot is free again: booking into it is not a concurrency request.
+    const outcome = store.book(booking({ startsAt: appointment.startsAt }))
+    expect(outcome.ok).toBe(true)
+    expect(outcome.ok && outcome.concurrency).toBeUndefined()
+  })
+
+  it('refuses a DNA on an appointment that already ran', () => {
+    store.markArrived('ap4')
+    store.start('ap4')
+    store.complete('ap4', DOCTOR, {})
+    store.markDna('ap4', RECEPTION)
+    expect(store.get('ap4')!.status).toBe('complete')
+  })
+
+  it('cancels, records the reason, and cannot cancel twice', () => {
+    store.cancel('ap2', RECEPTION, 'Patient rang to cancel')
+    expect(store.get('ap2')!.status).toBe('cancelled')
+    const event = store.events('ap2').find((e) => e.kind === 'cancelled')
+    expect(event?.detail).toBe('Patient rang to cancel')
+
+    store.cancel('ap2', DOCTOR)
+    expect(store.events('ap2').filter((e) => e.kind === 'cancelled')).toHaveLength(1)
+  })
+})
+
+describe('consultation history', () => {
+  it('keeps a completed consultation with its measured minutes and date', () => {
+    const appointment = store.get('ap4')!
+    const participant = appointment.participants[0]
+    store.markArrived('ap4')
+    store.start('ap4')
+    store.complete('ap4', DOCTOR, { [participant.id]: 12 })
+
+    const history = store.historyFor(participant.clinicPatientId)
+    expect(history[0]).toMatchObject({ clinicianId: DOCTOR, actualMinutes: 12 })
+    expect(history[0].at).toBe(appointment.finishedAt)
+  })
+
+  it('exposes seeded history newest first', () => {
+    const history = store.historyFor('cp5')
+    expect(history.length).toBeGreaterThan(1)
+    for (let i = 1; i < history.length; i++) {
+      expect(Date.parse(history[i - 1].at)).toBeGreaterThanOrEqual(Date.parse(history[i].at))
+    }
+  })
+
+  it('returns nothing for a patient with no history', () => {
+    expect(store.historyFor('nobody')).toEqual([])
+  })
+})

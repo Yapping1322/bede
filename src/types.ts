@@ -346,6 +346,14 @@ export interface Appointment {
   billing?: BillingProposal[]
 }
 
+/** One past consultation, for the patient's own history panel. Measured
+ * duration only — the item the clinician accepted is not repeated here. */
+export interface ConsultHistoryEntry {
+  at: string // ISO datetime
+  clinicianId: string
+  actualMinutes: number
+}
+
 /** Per-clinician, because "can you be overbooked" is the clinician's call and
  * not the practice manager's. */
 export interface ClinicianSchedulePolicy {
@@ -391,6 +399,7 @@ export type ScheduleEventKind =
   | 'concurrency-overridden'
   | 'intake-bypassed'
   | 'cancelled'
+  | 'did-not-attend'
   | 'completed'
 
 /** Append-only. Never edited, never deleted. "Triple-booked without being

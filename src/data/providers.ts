@@ -3,6 +3,7 @@ import type {
   ClinicPatient,
   ClinicianSchedulePolicy,
   ConcurrencyRequest,
+  ConsultHistoryEntry,
   DurationPrediction,
   IntakeSubmission,
   Message,
@@ -200,6 +201,15 @@ export interface ScheduleStore extends Subscribable {
   /** Confirm every proposed item at once. The clinician's decision is still
    * recorded against each claim — it is just not four separate decisions. */
   acceptAllBilling(appointmentId: string, actorId: string): void
+
+  /** The patient did not come. Releases the time the booking held and leaves a
+   * named record: a DNA nobody wrote down is indistinguishable from a booking
+   * that was never made. */
+  markDna(appointmentId: string, actorId: string): void
+  /** Cancelled before the appointment. Also releases the held time. */
+  cancel(appointmentId: string, actorId: string, note?: string): void
+  /** Measured history for one patient, newest first. */
+  historyFor(clinicPatientId: string): ConsultHistoryEntry[]
 }
 
 /** Restates a report the issuing provider already signed off. It must never

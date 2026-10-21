@@ -5,6 +5,7 @@ import type {
   ClinicSeedData,
   ClinicianSchedulePolicy,
   ConcurrencyRequest,
+  ConsultHistoryEntry,
   DurationPrediction,
   IntakeSubmission,
   MbsItem,
@@ -92,6 +93,9 @@ interface CompletedConsult {
   clinicPatientId: string
   clinicianId: string
   actualMinutes: number
+  /** Absent on history seeded before dates were kept; the panel skips those
+   * rather than inventing one. */
+  at?: string
 }
 
 /** The whole mutable book, stamped with the day it belongs to. */
@@ -120,6 +124,7 @@ class MockScheduleStore extends Emitter implements ScheduleStore {
     clinicPatientId: a.clinicPatientId,
     clinicianId: a.clinicianId,
     actualMinutes: a.actualMinutes,
+    at: new Date(Date.now() - a.daysAgo * 86_400_000).toISOString(),
   }))
   private counter = 0
 
@@ -245,7 +250,7 @@ class MockScheduleStore extends Emitter implements ScheduleStore {
 
   // --- prediction --------------------------------------------------------
 
-  private historyFor(clinicianId: string): DurationHistory {
+  private durationHistory(clinicianId: string): DurationHistory {
     const byPatient: Record<string, number[]> = {}
     for (const c of this.completed) {
       // A patient's own consultations count wherever they happened — how long
@@ -271,7 +276,7 @@ class MockScheduleStore extends Emitter implements ScheduleStore {
   }
 
   predict(clinicianId: string, participants: BookingRequest['participants']): DurationPrediction {
-    return predictDuration(this.toInputs(participants), this.historyFor(clinicianId), {
+    return predictDuration(this.toInputs(participants), this.durationHistory(clinicianId), {
       defaultMinutes: DEFAULT_MINUTES,
     })
   }
@@ -282,7 +287,7 @@ class MockScheduleStore extends Emitter implements ScheduleStore {
     input: BookingRequest['participants'][number],
   ): AppointmentParticipant {
     const [asInput] = this.toInputs([input])
-    const solo = predictParticipantMinutes(asInput, this.historyFor(clinicianId), {
+    const solo = predictParticipantMinutes(asInput, this.durationHistory(clinicianId), {
       defaultMinutes: DEFAULT_MINUTES,
     })
     return {
@@ -665,6 +670,36 @@ class MockScheduleStore extends Emitter implements ScheduleStore {
     this.emit()
   }
 
+  markDna(appointmentId: string, actorId: string): void {
+    const appointment = this.get(appointmentId)
+    if (!appointment) return
+    // Only a booking that had not started can be a did-not-attend.
+    if (appointment.status !== 'requested' && appointment.status !== 'confirmed') return
+    appointment.status = 'dna'
+    this.log('did-not-attend', appointmentId, actorId, 'Patient did not attend')
+    this.emit()
+  }
+
+  cancel(appointmentId: string, actorId: string, note?: string): void {
+    const appointment = this.get(appointmentId)
+    if (!appointment) return
+    if (['complete', 'cancelled', 'dna'].includes(appointment.status)) return
+    appointment.status = 'cancelled'
+    this.log('cancelled', appointmentId, actorId, note?.trim() || 'Appointment cancelled')
+    this.emit()
+  }
+
+  historyFor(clinicPatientId: string): ConsultHistoryEntry[] {
+    return this.completed
+      .filter((c) => c.clinicPatientId === clinicPatientId && c.at)
+      .map((c) => ({
+        at: c.at as string,
+        clinicianId: c.clinicianId,
+        actualMinutes: c.actualMinutes,
+      }))
+      .sort((a, b) => b.at.localeCompare(a.at))
+  }
+
   seeNext(appointmentId: string, participantId: string): void {
     const appointment = this.get(appointmentId)
     if (!appointment) return
@@ -723,6 +758,7 @@ class MockScheduleStore extends Emitter implements ScheduleStore {
         clinicPatientId: participant.clinicPatientId,
         clinicianId: appointment.clinicianId,
         actualMinutes: minutes,
+        at: appointment.finishedAt,
       })
       appointment.billing.push({
         participantId: participant.id,
